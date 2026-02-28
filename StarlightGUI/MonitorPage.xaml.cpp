@@ -298,7 +298,7 @@ namespace winrt::StarlightGUI::implementation
 		// 基本信息
 		GroupBox basicInfoBox;
 		StackPanel basicInfoPanel;
-		basicInfoBox.Header(box_value(L"基本信息"));
+		basicInfoBox.Header(L"基本信息");
 		basicInfoBox.Margin(ThicknessHelper::FromLengths(0, 0, 0, 10));
 		TextBlock name;
 		name.Text(L"名称: " + item.Name());
@@ -319,7 +319,7 @@ namespace winrt::StarlightGUI::implementation
 		// 引用信息
 		GroupBox referencesBox;
 		StackPanel referencesPanel;
-		referencesBox.Header(box_value(L"引用信息"));
+		referencesBox.Header(L"引用信息");
 		referencesBox.Margin(ThicknessHelper::FromLengths(0, 0, 0, 10));
 		TextBlock references;
 		references.Text(L"引用: " + std::to_wstring(item.References()));
@@ -332,7 +332,7 @@ namespace winrt::StarlightGUI::implementation
 		// 配额信息
 		GroupBox quotaBox;
 		StackPanel quotaPanel;
-		quotaBox.Header(box_value(L"配额信息"));
+		quotaBox.Header(L"配额信息");
 		quotaBox.Margin(ThicknessHelper::FromLengths(0, 0, 0, 10));
 		TextBlock paged;
 		paged.Text(L"分页池: " + FormatMemorySize(item.PagedPool()));
@@ -348,7 +348,7 @@ namespace winrt::StarlightGUI::implementation
 		StackPanel detailPanel;
 		detailBox.Margin(ThicknessHelper::FromLengths(0, 0, 0, 10));
 		if (item.Type() == L"SymbolicLink") {
-			detailBox.Header(box_value(L"符号链接"));
+			detailBox.Header(L"符号链接");
 			TextBlock creationTime;
 			creationTime.Text(L"创建时间: " + item.CreationTime());
 			TextBlock linkTarget;
@@ -357,7 +357,7 @@ namespace winrt::StarlightGUI::implementation
 			detailPanel.Children().Append(linkTarget);
 		}
 		else if (item.Type() == L"Event") {
-			detailBox.Header(box_value(L"事件"));
+			detailBox.Header(L"事件");
 			TextBlock eventType;
 			eventType.Text(L"事件类型: " + item.EventType());
 			TextBlock eventSignaled;
@@ -367,7 +367,7 @@ namespace winrt::StarlightGUI::implementation
 			detailPanel.Children().Append(eventSignaled);
 		}
 		else if (item.Type() == L"Mutant") {
-			detailBox.Header(box_value(L"互斥体"));
+			detailBox.Header(L"互斥体");
 			TextBlock mutantHoldCount;
 			mutantHoldCount.Text(L"持有数: " + to_hstring(item.MutantHoldCount()));
 			TextBlock mutantAbandoned;
@@ -377,7 +377,7 @@ namespace winrt::StarlightGUI::implementation
 			detailPanel.Children().Append(mutantAbandoned);
 		}
 		else if (item.Type() == L"Semaphore") {
-			detailBox.Header(box_value(L"信号量"));
+			detailBox.Header(L"信号量");
 			TextBlock semaphoreCount;
 			semaphoreCount.Text(L"当前量: " + to_hstring(item.SemaphoreCount()));
 			TextBlock semaphoreLimit;
@@ -386,7 +386,7 @@ namespace winrt::StarlightGUI::implementation
 			detailPanel.Children().Append(semaphoreLimit);
 		}
 		else if (item.Type() == L"Section") {
-			detailBox.Header(box_value(L"区域"));
+			detailBox.Header(L"区域");
 			TextBlock sectionBaseAddress;
 			sectionBaseAddress.Text(L"基址: " + ULongToHexString(item.SectionBaseAddress()));
 			TextBlock sectionMaximumSize;
@@ -400,7 +400,7 @@ namespace winrt::StarlightGUI::implementation
 			detailPanel.Children().Append(sectionAttributes);
 		}
 		else if (item.Type() == L"Timer") {
-			detailBox.Header(box_value(L"计时器"));
+			detailBox.Header(L"计时器");
 			TextBlock timerRemainingTime;
 			timerRemainingTime.Text(L"剩余时间: " + to_hstring(item.TimerRemainingTime() * 100) + L"ns");
 			TextBlock timerState;
@@ -410,7 +410,7 @@ namespace winrt::StarlightGUI::implementation
 			detailPanel.Children().Append(timerState);
 		}
 		else if (item.Type() == L"IoCompletion") {
-			detailBox.Header(box_value(L"I/O 完成端口"));
+			detailBox.Header(L"I/O 完成端口");
 			TextBlock ioCompletionDepth;
 			ioCompletionDepth.Text(L"深度: " + to_hstring(item.IoCompletionDepth()));
 			detailPanel.Children().Append(ioCompletionDepth);

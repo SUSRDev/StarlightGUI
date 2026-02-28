@@ -831,6 +831,20 @@ namespace winrt::StarlightGUI::implementation {
 		return DeviceIoControl(driverDevice, IOCTL_NTFS_COPY_FILE, &input, sizeof(INPUT), NULL, sizeof(ULONG), 0, 0);
 	}
 
+	BOOL KernelInstance::EnableHVM() noexcept {
+		if (!GetDriverDevice() || !IsRunningAsAdmin()) return FALSE;
+
+		LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_CHECK_HVM, __WFUNCTION__.c_str());
+		BOOL result = DeviceIoControl(driverDevice, IOCTL_CHECK_HVM, NULL, 0, NULL, 0, NULL, NULL);
+		
+		if (DeviceIoControl(driverDevice, IOCTL_CHECK_HVM, NULL, 0, NULL, 0, NULL, NULL)) {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_INIT_HVM, __WFUNCTION__.c_str());
+			result = DeviceIoControl(driverDevice, IOCTL_INIT_HVM, NULL, 0, NULL, 0, NULL, NULL);
+		}
+
+		return result;
+	}
+
 	BOOL KernelInstance::EnableCreateProcess() noexcept {
 		if (!GetDriverDevice() || !IsRunningAsAdmin()) return FALSE;
         LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_UNPROHIBIT_CREATEPROCESS, __WFUNCTION__.c_str());
@@ -905,26 +919,54 @@ namespace winrt::StarlightGUI::implementation {
 
 	BOOL KernelInstance::EnableObCallback() noexcept {
 		if (!GetDriverDevice() || !IsRunningAsAdmin()) return FALSE;
-		LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_ENABLE_OBCALLBACK, __WFUNCTION__.c_str());
-		return DeviceIoControl(driverDevice, IOCTL_ENABLE_OBCALLBACK, NULL, 0, NULL, 0, NULL, NULL);
+
+		if (hypervisor_mode) {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_ENABLE_OBCALLBACK_HVM, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_ENABLE_OBCALLBACK_HVM, NULL, 0, NULL, 0, NULL, NULL);
+		}
+		else {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_ENABLE_OBCALLBACK, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_ENABLE_OBCALLBACK, NULL, 0, NULL, 0, NULL, NULL);
+		}
 	}
 
 	BOOL KernelInstance::DisableObCallback() noexcept {
 		if (!GetDriverDevice() || !IsRunningAsAdmin()) return FALSE;
-		LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_DISABLE_OBCALLBACK, __WFUNCTION__.c_str());
-		return DeviceIoControl(driverDevice, IOCTL_DISABLE_OBCALLBACK, NULL, 0, NULL, 0, NULL, NULL);
+
+		if (hypervisor_mode) {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_DISABLE_OBCALLBACK_HVM, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_DISABLE_OBCALLBACK_HVM, NULL, 0, NULL, 0, NULL, NULL);
+		}
+		else {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_DISABLE_OBCALLBACK, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_DISABLE_OBCALLBACK, NULL, 0, NULL, 0, NULL, NULL);
+		}
 	}
 
 	BOOL KernelInstance::EnableDSE() noexcept {
 		if (!GetDriverDevice() || !IsRunningAsAdmin()) return FALSE;
-		LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_ENABLE_DSE, __WFUNCTION__.c_str());
-		return DeviceIoControl(driverDevice, IOCTL_ENABLE_DSE, NULL, 0, NULL, 0, NULL, NULL);
+
+		if (hypervisor_mode) {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_ENABLE_DSE_HVM, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_ENABLE_DSE, NULL, 0, NULL, 0, NULL, NULL);
+		}
+		else {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_ENABLE_DSE, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_ENABLE_DSE_HVM, NULL, 0, NULL, 0, NULL, NULL);
+		}
 	}
 
 	BOOL KernelInstance::DisableDSE() noexcept {
 		if (!GetDriverDevice() || !IsRunningAsAdmin()) return FALSE;
-		LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_DISABLE_DSE, __WFUNCTION__.c_str());
-		return DeviceIoControl(driverDevice, IOCTL_DISABLE_DSE, NULL, 0, NULL, 0, NULL, NULL);
+
+		if (hypervisor_mode) {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_DISABLE_DSE_HVM, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_DISABLE_DSE_HVM, NULL, 0, NULL, 0, NULL, NULL);
+		}
+		else {
+			LOG_WARNING(L"KernelInstance", L"Calling 0x%x from \"%s\"", IOCTL_DISABLE_DSE, __WFUNCTION__.c_str());
+			return DeviceIoControl(driverDevice, IOCTL_DISABLE_DSE, NULL, 0, NULL, 0, NULL, NULL);
+		}
 	}
 
 	BOOL KernelInstance::EnableCmpCallback() noexcept {

@@ -19,6 +19,35 @@
                         HorizontalAlignment="Left"
                         FontSize="14"
                         FontWeight="Bold"
+                        Text="Hypervisor" />
+                    <!--  开启 Hypervisor 模式  -->
+                    <essential:SettingsCard
+                        Margin="0,0,0,10"
+                        essential:RevealFocusPanel.AttachToPanel="{x:Bind RevealFocusPanel}"
+                        Description="开启虚拟化模式，将强化部分功能（仅限支持 Intel VT 的硬件)"
+                        Header="Hypervisor 模式"
+                        IsActionIconVisible="False"
+                        IsClickEnabled="True">
+                        <essential:SettingsCard.HeaderIcon>
+                            <FontIcon
+                                FontFamily="Segoe Fluent Icons"
+                                FontSize="16"
+                                Glyph="&#xebd2;" />
+                        </essential:SettingsCard.HeaderIcon>
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                Click="Button_Click"
+                                Content="启用"
+                                Style="{ThemeResource AccentButtonStyle}"
+                                Tag="ENABLE_HVM" />
+                        </StackPanel>
+                    </essential:SettingsCard>
+
+                    <TextBlock
+                        Padding="10"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        FontWeight="Bold"
                         Text="系统行为控制" />
 
                     <!--  创建进程  -->
@@ -185,6 +214,7 @@
 
                     <!--  注册对象操作回调  -->
                     <essential:SettingsCard
+                        x:Name="ObCallbackCard"
                         Margin="0,0,0,10"
                         essential:RevealFocusPanel.AttachToPanel="{x:Bind RevealFocusPanel}"
                         Description="禁止或允许注册对象操作回调 (ObRegisterCallbacks)"
@@ -239,6 +269,7 @@
 
                     <!--  驱动签名强制  -->
                     <essential:SettingsCard
+                        x:Name="DSECard"
                         Margin="0,0,0,10"
                         essential:RevealFocusPanel.AttachToPanel="{x:Bind RevealFocusPanel}"
                         Description="开启或关闭驱动签名强制 (Driver Signature Enforcement)"

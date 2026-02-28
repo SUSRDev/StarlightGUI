@@ -32,7 +32,7 @@
     <Grid>
         <!--  输入框  -->
         <StackPanel Margin="0,0,0,10">
-            <TextBlock Margin="0,0,0,20" Text="Starlight GUI 将根据选定驱动文件路径，加载目标驱动文件至系统内核。" />
+            <TextBlock Margin="0,0,0,20" Text="Starlight GUI 将根据选定驱动文件路径，加载目标驱动文件至系统中。" />
             <TextBox
                 x:Name="DriverPathTextBox"
                 Margin="0,0,0,10"

@@ -15,6 +15,8 @@ namespace winrt::StarlightGUI::implementation
 {
     LoadDriverDialog::LoadDriverDialog() {
         InitializeComponent();
+
+        if (hypervisor_mode) BypassCheckBox().Content(box_value(L"绕过驱动签名检测 (Hypervisor mode)"));
     }
 
     void LoadDriverDialog::OnPrimaryButtonClick(ContentDialog const& sender,

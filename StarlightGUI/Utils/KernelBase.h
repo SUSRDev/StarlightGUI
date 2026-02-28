@@ -78,6 +78,7 @@ namespace winrt::StarlightGUI::implementation {
 		static BOOL _CopyFile(std::wstring from, std::wstring to, std::wstring name) noexcept;
 
 		// System
+		static BOOL EnableHVM() noexcept;
 		static BOOL EnableCreateProcess() noexcept;
 		static BOOL DisableCreateProcess() noexcept;
 		static BOOL EnableCreateFile() noexcept;

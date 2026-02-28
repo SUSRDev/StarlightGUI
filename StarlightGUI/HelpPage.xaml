@@ -229,7 +229,7 @@
                                     <TextBlock
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        Text="擅长驱动开发，提供了 ArkDrv 和本软件的驱动代码指导。" />
+                                        Text="擅长内核开发，提供了 SKT64 驱动和 AstralX 代码指导。" />
                                 </StackPanel>
                             </StackPanel>
                             <Button

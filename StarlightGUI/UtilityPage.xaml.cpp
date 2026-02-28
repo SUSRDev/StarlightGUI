@@ -22,6 +22,11 @@ namespace winrt::StarlightGUI::implementation{
 				});
 		}
 
+		if (hypervisor_mode) {
+			ObCallbackCard().Header(box_value(L"注册对象操作回调 (Hypervisor mode)"));
+			DSECard().Header(box_value(L"驱动签名强制 (Hypervisor mode)"));
+		}
+
 		LOG_INFO(L"UtilityPage", L"UtilityPage initialized.");
 	}
 
@@ -63,7 +68,11 @@ namespace winrt::StarlightGUI::implementation{
 
 		BOOL result = FALSE;
 
-		if (tag == L"ENABLE_CREATE_PROCESS") {
+		if (tag == L"ENABLE_HVM") {
+			result = KernelInstance::EnableHVM();
+			hypervisor_mode = result;
+		}
+		else if (tag == L"ENABLE_CREATE_PROCESS") {
 			result = KernelInstance::EnableCreateProcess();
 		}
 		else if (tag == L"DISABLE_CREATE_PROCESS") {
@@ -147,6 +156,11 @@ namespace winrt::StarlightGUI::implementation{
 			else {
 				CreateInfoBarAndDisplay(L"失败", L"无法完成操作，错误码: " + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
 			}
+		}
+
+		if (hypervisor_mode) {
+			ObCallbackCard().Header(box_value(L"注册对象操作回调 (Hypervisor mode)"));
+			DSECard().Header(box_value(L"驱动签名强制 (Hypervisor mode)"));
 		}
 
 		co_return;
