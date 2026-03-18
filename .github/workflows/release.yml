@@ -1,14 +1,16 @@
-﻿name: build-msbuild
+name: release-msbuild
 
 on:
   push:
-    branches: [ "master", "main" ]
-  pull_request:
-    branches: [ "master", "main" ]
+    tags:
+      - "v*"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  build-and-release:
     runs-on: windows-latest
 
     env:
@@ -48,15 +50,29 @@ jobs:
           New-Item -ItemType Directory -Path artifact -Force | Out-Null
           Copy-Item "$releaseDir/*" artifact -Recurse -Force
 
-      - name: Pack zip
+          if (-not (Test-Path "artifact/StarlightGUI.exe")) {
+            Write-Warning "StarlightGUI.exe not found at artifact root; continuing with packaged files."
+          }
+
+      - name: Pack release zip + checksum
         shell: pwsh
         run: |
-          $zipName = "StarlightGUI-${{ env.BUILD_CONFIGURATION }}-${{ env.BUILD_PLATFORM }}-${{ github.run_number }}.zip"
+          $tag = "${{ github.ref_name }}"
+          $zipName = "StarlightGUI-$tag-win-x64.zip"
           Compress-Archive -Path artifact\* -DestinationPath $zipName -Force
-          "ZIP_NAME=$zipName" >> $env:GITHUB_ENV
 
-      - name: Upload artifact zip
-        uses: actions/upload-artifact@v4
+          $checksumName = "$zipName.sha256"
+          $hash = (Get-FileHash -Path $zipName -Algorithm SHA256).Hash.ToLower()
+          "$hash  $zipName" | Out-File -FilePath $checksumName -Encoding ascii
+
+          "ZIP_NAME=$zipName" >> $env:GITHUB_ENV
+          "CHECKSUM_NAME=$checksumName" >> $env:GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: starlightgui-${{ env.BUILD_CONFIGURATION }}-${{ env.BUILD_PLATFORM }}
-          path: ${{ env.ZIP_NAME }}
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-pre') }}
+          files: |
+            ${{ env.ZIP_NAME }}
+            ${{ env.CHECKSUM_NAME }}
