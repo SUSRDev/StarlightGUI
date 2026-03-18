@@ -47,11 +47,20 @@ jobs:
             throw "Release output directory not found. Tried: $($releaseDirCandidates -join ', ')"
           }
 
+          $payloadDir = $releaseDir
+          if (Test-Path "$releaseDir/StarlightGUI/StarlightGUI.exe") {
+            $payloadDir = "$releaseDir/StarlightGUI"
+          }
+
           New-Item -ItemType Directory -Path artifact -Force | Out-Null
-          Copy-Item "$releaseDir/*" artifact -Recurse -Force
+          Copy-Item "$payloadDir/*" artifact -Recurse -Force
 
           if (-not (Test-Path "artifact/StarlightGUI.exe")) {
-            Write-Warning "StarlightGUI.exe not found at artifact root; continuing with packaged files."
+            throw "StarlightGUI.exe not found in collected artifact directory: $payloadDir"
+          }
+
+          if (-not (Test-Path "artifact/capstone.dll")) {
+            throw "capstone.dll not found beside StarlightGUI.exe in artifact directory: $payloadDir"
           }
 
       - name: Pack release zip + checksum

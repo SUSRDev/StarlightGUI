@@ -45,8 +45,13 @@ jobs:
             throw "Release output directory not found. Tried: $($releaseDirCandidates -join ', ')"
           }
 
+          $payloadDir = $releaseDir
+          if (Test-Path "$releaseDir/StarlightGUI/StarlightGUI.exe") {
+            $payloadDir = "$releaseDir/StarlightGUI"
+          }
+
           New-Item -ItemType Directory -Path artifact -Force | Out-Null
-          Copy-Item "$releaseDir/*" artifact -Recurse -Force
+          Copy-Item "$payloadDir/*" artifact -Recurse -Force
 
       - name: Pack zip
         shell: pwsh
