@@ -105,7 +105,7 @@ namespace slg {
     FontIcon CreateFontIcon(hstring glyph) {
         FontIcon fontIcon;
         fontIcon.Glyph(glyph);
-        fontIcon.FontFamily(FontFamily(L"Segoe Fluent Icons"));
+        fontIcon.FontFamily(FontFamily(L"Segoe Fluent Icons, Segoe MDL2 Assets"));
         fontIcon.FontSize(16);
 
         return fontIcon;
@@ -201,7 +201,7 @@ namespace slg {
         return XamlReader::Load(LR"(
         <DataTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <FontIcon Glyph="&#xec61;" FontSize="30" FontFamily="Segoe Fluent Icons" Foreground="Green" Margin="0,5,0,0"/>
+                <FontIcon Glyph="&#xec61;" FontSize="30" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Foreground="Green" Margin="0,5,0,0"/>
                 <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
@@ -212,7 +212,7 @@ namespace slg {
         return XamlReader::Load(LR"(
         <DataTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <FontIcon Glyph="&#xeb90;" FontSize="30" FontFamily="Segoe Fluent Icons" Foreground="OrangeRed" Margin="0,5,0,0"/>
+                <FontIcon Glyph="&#xeb90;" FontSize="30" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Foreground="OrangeRed" Margin="0,5,0,0"/>
                 <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
@@ -223,7 +223,7 @@ namespace slg {
         return XamlReader::Load(LR"(
         <DataTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <FontIcon Glyph="&#xf167;" FontSize="30" FontFamily="Segoe Fluent Icons" Foreground="LightBlue" Margin="0,5,0,0"/>
+                <FontIcon Glyph="&#xf167;" FontSize="30" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Foreground="LightBlue" Margin="0,5,0,0"/>
                 <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
@@ -252,3 +252,4 @@ namespace slg {
         return false;
     }
 }
+

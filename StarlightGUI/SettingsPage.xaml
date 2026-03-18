@@ -26,7 +26,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe736;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -50,7 +50,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xf272;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -69,7 +69,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe7f1;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -88,7 +88,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe7ef;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -107,7 +107,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe8e3;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -136,7 +136,7 @@
                     Header="背景">
                     <essential:SettingsExpander.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xef1f;" />
                     </essential:SettingsExpander.HeaderIcon>
@@ -192,7 +192,7 @@
                     Header="图片背景">
                     <essential:SettingsExpander.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xee71;" />
                     </essential:SettingsExpander.HeaderIcon>
@@ -259,7 +259,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe728;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -283,7 +283,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xeb9d;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -309,7 +309,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe7ba;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -328,7 +328,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xecc5;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -348,7 +348,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe70b;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -364,7 +364,7 @@
                     IsClickEnabled="True">
                     <essential:SettingsCard.HeaderIcon>
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="16"
                             Glyph="&#xe90f;" />
                     </essential:SettingsCard.HeaderIcon>
@@ -374,3 +374,4 @@
         </essential:RevealFocusPanel>
     </ScrollViewer>
 </Page>
+

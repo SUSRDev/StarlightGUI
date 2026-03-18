@@ -55,12 +55,12 @@
                         Click="RefreshProcessListButton_Click"
                         Label="刷新">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe72c;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe72c;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton Click="CreateProcessButton_Click" Label="运行进程">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xefda;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xefda;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
@@ -68,7 +68,7 @@
                         Click="TerminateProcessButton_Click"
                         Label="结束进程">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe733;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe733;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>

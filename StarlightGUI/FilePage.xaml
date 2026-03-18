@@ -63,7 +63,7 @@
                         Click="RefreshButton_Click"
                         Label="刷新">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe72c;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe72c;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
@@ -71,7 +71,7 @@
                         Click="NextDriveButton_Click"
                         Label="下个盘符">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xebe7;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xebe7;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>
@@ -256,3 +256,4 @@
             HorizontalAlignment="Right" />
     </Grid>
 </Page>
+

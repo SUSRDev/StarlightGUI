@@ -40,7 +40,7 @@
                     <essential:SegmentedItem>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xf0b2;" />
                             <TextBlock Text="对象" />
@@ -49,7 +49,7 @@
                     <essential:SegmentedItem>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xebe8;" />
                             <TextBlock Text="调试信息" />
@@ -58,7 +58,7 @@
                     <essential:SegmentedItem x:Name="CallbackSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe77e;" />
                             <TextBlock Text="回调/消息" />
@@ -67,7 +67,7 @@
                     <essential:SegmentedItem x:Name="MiniFilterSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe7e3;" />
                             <TextBlock Text="微过滤驱动" />
@@ -76,7 +76,7 @@
                     <essential:SegmentedItem x:Name="StdFilterSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe7ec;" />
                             <TextBlock Text="标准过滤驱动" />
@@ -85,7 +85,7 @@
                     <essential:SegmentedItem x:Name="SSDTSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xf0b9;" />
                             <TextBlock Text="SSDT" />
@@ -94,7 +94,7 @@
                     <essential:SegmentedItem x:Name="SSSDTSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe727;" />
                             <TextBlock Text="Shadow SSDT" />
@@ -103,7 +103,7 @@
                     <essential:SegmentedItem x:Name="IoTimerSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe916;" />
                             <TextBlock Text="I/O 定时器" />
@@ -112,7 +112,7 @@
                     <essential:SegmentedItem x:Name="ExCallbackSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe7f2;" />
                             <TextBlock Text="ExCallback" />
@@ -121,7 +121,7 @@
                     <essential:SegmentedItem x:Name="IDTSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe950;" />
                             <TextBlock Text="中断描述符表" />
@@ -130,7 +130,7 @@
                     <essential:SegmentedItem x:Name="GDTSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xe964;" />
                             <TextBlock Text="全局描述符表" />
@@ -139,7 +139,7 @@
                     <essential:SegmentedItem x:Name="PiDDBSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xf0e3;" />
                             <TextBlock Text="PiDDB 缓存表" />
@@ -148,7 +148,7 @@
                     <essential:SegmentedItem x:Name="HALDPTSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xf590;" />
                             <TextBlock Text="HAL 分发表" />
@@ -157,7 +157,7 @@
                     <essential:SegmentedItem x:Name="HALPDPTSegmentedItem">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <FontIcon
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                                 FontSize="14"
                                 Glyph="&#xf58f;" />
                             <TextBlock Text="HAL 私有分发表" />
@@ -174,7 +174,7 @@
                     Click="RefreshButton_Click"
                     Label="刷新">
                     <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe72c;" />
+                        <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe72c;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>

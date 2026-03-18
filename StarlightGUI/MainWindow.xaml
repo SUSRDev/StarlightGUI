@@ -91,37 +91,37 @@
                         Tag="Home" />
                     <NavigationViewItem Content="任务管理" Tag="Task">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf120;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xf120;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem Content="模块管理" Tag="KernelModule">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe8ce;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe8ce;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem Content="文件管理" Tag="File">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xec50;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xec50;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem Content="窗口管理" Tag="Window">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe737;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe737;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem Content="系统功能" Tag="Utility">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xec7a;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xec7a;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem Content="监视器" Tag="Monitor">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xea8f;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xea8f;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem Content="内存反汇编" Tag="Disasm">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe943;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe943;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                 </NavigationView.MenuItems>
@@ -134,7 +134,7 @@
                         IsEnabled="False"
                         Tag="Deuterium">
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe945;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe945;" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem

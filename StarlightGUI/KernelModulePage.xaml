@@ -55,7 +55,7 @@
                         Click="RefreshKernelModuleListButton_Click"
                         Label="刷新">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe72c;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe72c;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
@@ -63,7 +63,7 @@
                         Click="LoadDriverButton_Click"
                         Label="加载驱动">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xeda2;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xeda2;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
@@ -71,7 +71,7 @@
                         Click="UnloadModuleButton_Click"
                         Label="卸载模块">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xec91;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xec91;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>

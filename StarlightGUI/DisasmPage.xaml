@@ -55,7 +55,7 @@
                     Style="{StaticResource AccentButtonStyle}">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
                             FontSize="14"
                             Glyph="&#xe945;" />
                         <TextBlock Margin="5,0,0,0" Text="执行" />
@@ -136,3 +136,4 @@
         </Grid>
     </Grid>
 </Page>
+

@@ -70,7 +70,7 @@
                         Click="RefreshButton_Click"
                         Label="刷新">
                         <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe72c;" />
+                            <FontIcon FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Glyph="&#xe72c;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>
