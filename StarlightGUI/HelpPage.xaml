@@ -108,7 +108,7 @@
                                     <TextBlock
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        Text="官方源代码仓库: https://github.com/RinoRika/StarlightGUI" />
+                                        Text="官方源代码仓库: https://github.com/OpenStarlight/StarlightGUI" />
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">

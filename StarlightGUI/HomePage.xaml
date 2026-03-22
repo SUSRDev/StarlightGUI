@@ -251,7 +251,7 @@
                                     <TextBlock
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        Text="  开源仓库：https://github.com/RinoRika/StarlightGUI" />
+                                        Text="  开源仓库：https://github.com/OpenStarlight/StarlightGUI" />
                                 </StackPanel>
                                 <TextBlock
                                     Padding="0,10,0,0"

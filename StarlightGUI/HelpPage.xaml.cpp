@@ -36,7 +36,7 @@ namespace winrt::StarlightGUI::implementation
 
     void HelpPage::GithubButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
     {
-        LaunchURI(L"https://github.com/RinoRika/StarlightGUI");
+        LaunchURI(L"https://github.com/OpenStarlight/StarlightGUI");
     }
 
     void HelpPage::Github2Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
