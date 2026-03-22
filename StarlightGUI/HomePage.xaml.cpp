@@ -20,6 +20,7 @@
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <random>
 #include <chrono>
+#include <ctime>
 #include <iomanip>
 #include <algorithm>
 #include <cwctype>
@@ -76,14 +77,16 @@ namespace winrt::StarlightGUI::implementation
                 L"欢迎回来",
                 L"你好",
                 L"Hi",
+                L"Ciallo～(∠・ω< )⌒★",
                 L"TimeFormat",
             };
             greeting = greetings[GenerateRandomNumber(0, greetings.size() - 1)];
 
-            DateTime currentDateTime;
-            Calendar calendar;
-            calendar.SetToNow();
-            int currentHour = calendar.Hour();
+            auto now = std::chrono::system_clock::now();
+            auto nowTime = std::chrono::system_clock::to_time_t(now);
+            std::tm localTime{};
+            localtime_s(&localTime, &nowTime);
+            int currentHour = localTime.tm_hour;
 
             if (greeting == L"TimeFormat") {
                 if (currentHour >= 4 && currentHour < 12)
