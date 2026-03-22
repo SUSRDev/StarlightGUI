@@ -217,6 +217,7 @@ namespace winrt::StarlightGUI::implementation
 
 		int segmentedIndex = 0;
         bool m_isLoading = false;
+        uint32_t m_lastDbgViewLength = 0;
         winrt::Microsoft::UI::Xaml::DispatcherTimer reloadTimer;
 		winrt::Microsoft::UI::Xaml::DispatcherTimer windbgTimer;
 

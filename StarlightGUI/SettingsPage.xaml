@@ -63,7 +63,7 @@
                 <essential:SettingsCard
                     Margin="0,0,0,10"
                     essential:RevealFocusPanel.AttachToPanel="{x:Bind RevealFocusPanel}"
-                    Description="任务管理器会周期性刷新进程列表，并尽量保持当前滚动位置和选中项"
+                    Description="任务管理器会周期性刷新进程列表，使信息始终保持最新"
                     Header="任务自动刷新"
                     IsActionIconVisible="False"
                     IsClickEnabled="True">

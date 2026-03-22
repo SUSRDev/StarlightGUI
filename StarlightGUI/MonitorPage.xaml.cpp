@@ -11,7 +11,6 @@ using namespace WinUI3Package;
 
 namespace winrt::StarlightGUI::implementation
 {
-	static std::vector<SegmentedItem> items;
 	static std::vector<winrt::StarlightGUI::ObjectEntry> partitions;
 
 	MonitorPage::MonitorPage() {
@@ -39,6 +38,20 @@ namespace winrt::StarlightGUI::implementation
 
 		Unloaded([this](auto&&, auto&&) {
 			windbgTimer.Stop();
+			});
+
+		reloadTimer.Tick([this](auto&&, auto&&) {
+			RefreshButton_Click(nullptr, nullptr);
+			reloadTimer.Stop();
+			});
+
+		windbgTimer.Interval(std::chrono::seconds(1));
+		windbgTimer.Tick([this](auto&&, auto&&) {
+			std::lock_guard<std::mutex> guard(dbgViewMutex);
+			uint32_t currentLength = static_cast<uint32_t>(dbgViewData.size());
+			if (currentLength == m_lastDbgViewLength) return;
+			DbgViewBox().Text(dbgViewData);
+			m_lastDbgViewLength = currentLength;
 			});
 
 		LOG_INFO(L"MonitorPage", L"MonitorPage initialized.");
@@ -942,10 +955,6 @@ namespace winrt::StarlightGUI::implementation
 			textBlock.Text(partition.Path());
 			item.Content(textBlock);
 			item.HorizontalContentAlignment(HorizontalAlignment::Left);
-			items.push_back(item);
-		}
-
-		for (const auto& item : items) {
 			m_itemList.Append(item);
 		}
 		co_return;
@@ -995,6 +1004,8 @@ namespace winrt::StarlightGUI::implementation
 
 	static DWORD DbgViewThread(bool global, DbgViewMonitor* m)
 	{
+		constexpr uint32_t DbgViewMaxLength = 200000;
+
 		HANDLE& BufferReadyEvent = global ? m->GlobalBufferReadyEvent : m->LocalBufferReadyEvent;
 		HANDLE& DataReadyEvent = global ? m->GlobalDataReadyEvent : m->LocalDataReadyEvent;
 		PDBWIN_PAGE_BUFFER debugMessageBuffer = global ? m->GlobalDebugBuffer : m->LocalDebugBuffer;
@@ -1015,6 +1026,12 @@ namespace winrt::StarlightGUI::implementation
 				wchar_t buffer[4096];
 				swprintf_s(buffer, _countof(buffer), L"[%02d:%02d:%02d.%03d] [PID=%d] %hs\n", st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, debugMessageBuffer->ProcessId, debugMessageBuffer->Buffer);
 				*(m->Data) = *(m->Data) + to_hstring(buffer);
+				uint32_t currentLength = static_cast<uint32_t>(m->Data->size());
+				if (currentLength > DbgViewMaxLength) {
+					std::wstring text = m->Data->c_str();
+					text.erase(0, currentLength - DbgViewMaxLength);
+					*(m->Data) = text.c_str();
+				}
 			}
 		}
 
@@ -1063,10 +1080,6 @@ namespace winrt::StarlightGUI::implementation
 
 		reloadTimer.Stop();
 		reloadTimer.Interval(std::chrono::milliseconds(interval));
-		reloadTimer.Tick([this](auto&&, auto&&) {
-			RefreshButton_Click(nullptr, nullptr);
-			reloadTimer.Stop();
-			});
 		reloadTimer.Start();
 
 		co_return;
@@ -1092,13 +1105,9 @@ namespace winrt::StarlightGUI::implementation
 		LoadingRing().IsActive(true);
 
 		auto weak_this = get_weak();
+		int32_t previousObjectIndex = ObjectTreeView().SelectedIndex();
 		segmentedIndex = index;
 
-		// 清除列表以防止潜在的内存占用
-		items.clear();
-		partitions.clear();
-		items.shrink_to_fit();
-		partitions.shrink_to_fit();
 		m_itemList.Clear();
 		m_objectList.Clear();
 		m_generalList.Clear();
@@ -1122,26 +1131,32 @@ namespace winrt::StarlightGUI::implementation
 		switch (index) {
 		case 0: {
 			ObjectGrid().Visibility(Visibility::Visible);
-			winrt::StarlightGUI::ObjectEntry root = winrt::make<winrt::StarlightGUI::implementation::ObjectEntry>();
-			root.Name(L"\\");
-			root.Type(L"Directory");
-			root.Path(L"\\");
-			partitions.push_back(root);
-			co_await LoadPartitionList(L"\\");
+			if (force || partitions.empty()) {
+				partitions.clear();
+				winrt::StarlightGUI::ObjectEntry root = winrt::make<winrt::StarlightGUI::implementation::ObjectEntry>();
+				root.Name(L"\\");
+				root.Type(L"Directory");
+				root.Path(L"\\");
+				partitions.push_back(root);
+				co_await LoadPartitionList(L"\\");
+			}
 			co_await LoadItemList();
-			co_await LoadObjectList();
-			ObjectTreeView().SelectedIndex(0);
+			if (m_itemList.Size() > 0) {
+				int32_t safeIndex = previousObjectIndex >= 0 && previousObjectIndex < static_cast<int32_t>(m_itemList.Size()) ? previousObjectIndex : 0;
+				ObjectTreeView().SelectedIndex(safeIndex);
+				co_await LoadObjectList();
+			}
 			break;
 		}
 		case 1: {
 			DbgViewGrid().Visibility(Visibility::Visible);
 			DbgViewButton().Content(isDbgViewEnabled ? box_value(L"关闭") : box_value(L"开启"));
 			DbgViewGlobalCheckBox().IsChecked(isDbgViewGlobalEnabled);
-			windbgTimer.Interval(std::chrono::seconds(1));
-			windbgTimer.Tick([this](auto&&, auto&&) {
+			{
 				std::lock_guard<std::mutex> guard(dbgViewMutex);
 				DbgViewBox().Text(dbgViewData);
-				});
+				m_lastDbgViewLength = static_cast<uint32_t>(dbgViewData.size());
+			}
 			windbgTimer.Start();
 			break;
 		}
