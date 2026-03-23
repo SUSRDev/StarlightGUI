@@ -330,18 +330,18 @@ namespace slg {
         UINT flags = SHGFI_ICON | SHGFI_SMALLICON;
         DWORD attrs = isDirectory ? FILE_ATTRIBUTE_DIRECTORY : FILE_ATTRIBUTE_NORMAL;
 
-        bool ok = false;
+        bool status = false;
         if (useFileAttributes) {
-            ok = SHGetFileInfoW(path.c_str(), attrs, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
-            if (!ok) ok = SHGetFileInfoW(L".", FILE_ATTRIBUTE_NORMAL, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
+            status = SHGetFileInfoW(path.c_str(), attrs, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
+            if (!status) status = SHGetFileInfoW(L".", FILE_ATTRIBUTE_NORMAL, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
         }
         else {
-            ok = SHGetFileInfoW(path.c_str(), 0, &shfi, sizeof(shfi), flags) != 0;
-            if (!ok) ok = SHGetFileInfoW(path.c_str(), attrs, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
-            if (!ok) ok = SHGetFileInfoW(L".", FILE_ATTRIBUTE_NORMAL, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
+            status = SHGetFileInfoW(path.c_str(), 0, &shfi, sizeof(shfi), flags) != 0;
+            if (!status) status = SHGetFileInfoW(path.c_str(), attrs, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
+            if (!status) status = SHGetFileInfoW(L".", FILE_ATTRIBUTE_NORMAL, &shfi, sizeof(shfi), flags | SHGFI_USEFILEATTRIBUTES) != 0;
         }
 
-        if (!ok || !shfi.hIcon) return nullptr;
+        if (!status || !shfi.hIcon) return nullptr;
 
         auto source = CreateImageSourceFromHIcon(shfi.hIcon, iconSize, true);
         if (source) cache.insert_or_assign(key, source);

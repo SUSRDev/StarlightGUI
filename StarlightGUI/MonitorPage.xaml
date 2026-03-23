@@ -204,7 +204,6 @@
             Text="选择一个板块。"
             Visibility="Visible" />
 
-        <!--  每个 ListView 单独包裹 RevealFocusPanel，Tag 绑定到对应 panel  -->
         <Grid
             x:Name="ObjectGrid"
             Grid.Row="1"
@@ -282,14 +281,18 @@
                     BorderThickness="0,0,1,1"
                     CornerRadius="0,0,5,0">
                     <Grid>
-                        <essential:RevealFocusPanel x:Name="ObjectRevealFocusPanel">
-                            <ListView
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+
+                        <ListView
                                 x:Name="ObjectListView"
+                            Grid.ColumnSpan="2"
                                 Background="Transparent"
                                 ContainerContentChanging="MonitorListView_ContainerContentChanging"
                                 ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                                RightTapped="ObjectListView_RightTapped"
-                                Tag="{x:Bind ObjectRevealFocusPanel}">
+                                RightTapped="ObjectListView_RightTapped">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Height="50">
@@ -310,13 +313,7 @@
                                                     Text="{Binding Path}" />
                                             </StackPanel>
 
-                                            <Border
-                                                Grid.Column="1"
-                                                Margin="12,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Stretch"
-                                                BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                                BorderThickness="0,0,1,0" />
+                                            
 
                                             <!--  类型  -->
                                             <TextBlock
@@ -331,7 +328,13 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                        </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                     </Grid>
                 </Border>
             </Grid>
@@ -430,14 +433,19 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="CallbackRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="CallbackListView"
+                            Grid.ColumnSpan="3"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="CallbackListView_RightTapped"
-                            Tag="{x:Bind CallbackRevealFocusPanel}">
+                            RightTapped="CallbackListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -459,13 +467,7 @@
                                                 Text="{Binding String1}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  入口  -->
                                         <TextBlock
@@ -477,13 +479,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String3}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  句柄  -->
                                         <TextBlock
@@ -498,7 +494,20 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -563,14 +572,20 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="MiniFilterRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="MiniFilterListView"
+                            Grid.ColumnSpan="4"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="MiniFilterListView_RightTapped"
-                            Tag="{x:Bind MiniFilterRevealFocusPanel}">
+                            RightTapped="MiniFilterListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -593,13 +608,7 @@
                                                 Text="{Binding String1}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  基址  -->
                                         <TextBlock
@@ -611,13 +620,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String3}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  PreFilter  -->
                                         <TextBlock
@@ -629,13 +632,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String4}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  PostFilter  -->
                                         <TextBlock
@@ -650,7 +647,27 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -715,14 +732,20 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="StdFilterRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="StdFilterListView"
+                            Grid.ColumnSpan="4"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="StdFilterListView_RightTapped"
-                            Tag="{x:Bind StdFilterRevealFocusPanel}">
+                            RightTapped="StdFilterListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -745,13 +768,7 @@
                                                 Text="{Binding String3}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  类型  -->
                                         <TextBlock
@@ -763,13 +780,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String1}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  设备对象  -->
                                         <TextBlock
@@ -781,13 +792,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String4}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  目标驱动对象  -->
                                         <TextBlock
@@ -802,7 +807,27 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -876,14 +901,21 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="SSDTRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="SSDTListView"
+                            Grid.ColumnSpan="5"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="SSDTListView_RightTapped"
-                            Tag="{x:Bind SSDTRevealFocusPanel}">
+                            RightTapped="SSDTListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -907,13 +939,7 @@
                                                 Text="{Binding String1}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  钩子  -->
                                         <TextBlock
@@ -925,13 +951,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String5}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  地址  -->
                                         <TextBlock
@@ -943,13 +963,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String3}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  源地址  -->
                                         <TextBlock
@@ -961,13 +975,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String4}" />
 
-                                        <Border
-                                            Grid.Column="4"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  序号  -->
                                         <TextBlock
@@ -982,7 +990,34 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="4"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1056,14 +1091,21 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="SSSDTRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="SSSDTListView"
+                            Grid.ColumnSpan="5"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="SSDTListView_RightTapped"
-                            Tag="{x:Bind SSSDTRevealFocusPanel}">
+                            RightTapped="SSDTListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1087,13 +1129,7 @@
                                                 Text="{Binding String1}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  钩子  -->
                                         <TextBlock
@@ -1105,13 +1141,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String5}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  地址  -->
                                         <TextBlock
@@ -1123,13 +1153,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String3}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  源地址  -->
                                         <TextBlock
@@ -1141,13 +1165,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String4}" />
 
-                                        <Border
-                                            Grid.Column="4"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  序号  -->
                                         <TextBlock
@@ -1162,7 +1180,34 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="4"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1218,13 +1263,18 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="IoTimerRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="IoTimerListView"
+                            Grid.ColumnSpan="3"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
-                            ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            Tag="{x:Bind IoTimerRevealFocusPanel}">
+                            ItemContainerStyle="{StaticResource ListViewItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1243,13 +1293,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                                             Text="{Binding String1}" />
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  地址  -->
                                         <TextBlock
@@ -1261,13 +1305,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String2}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  对象  -->
                                         <TextBlock
@@ -1282,7 +1320,20 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1347,14 +1398,20 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="ExCallbackRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="ExCallbackListView"
+                            Grid.ColumnSpan="4"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="ExCallbackListView_RightTapped"
-                            Tag="{x:Bind ExCallbackRevealFocusPanel}">
+                            RightTapped="ExCallbackListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1377,13 +1434,7 @@
                                                 Text="{Binding String2}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  入口  -->
                                         <TextBlock
@@ -1395,13 +1446,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String3}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  对象  -->
                                         <TextBlock
@@ -1413,13 +1458,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String4}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  句柄  -->
                                         <TextBlock
@@ -1434,7 +1473,27 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1499,13 +1558,19 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="IDTRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="IDTListView"
+                            Grid.ColumnSpan="4"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
-                            ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            Tag="{x:Bind IDTRevealFocusPanel}">
+                            ItemContainerStyle="{StaticResource ListViewItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1525,13 +1590,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                                             Text="{Binding String1}" />
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  地址  -->
                                         <TextBlock
@@ -1543,13 +1602,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String2}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  CPU  -->
                                         <TextBlock
@@ -1561,13 +1614,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding ULong1}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  序号  -->
                                         <TextBlock
@@ -1582,7 +1629,27 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1665,13 +1732,21 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="GDTRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="GDTListView"
+                            Grid.ColumnSpan="6"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
-                            ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            Tag="{x:Bind GDTRevealFocusPanel}">
+                            ItemContainerStyle="{StaticResource ListViewItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1693,13 +1768,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                                             Text="{Binding String1}" />
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  基址  -->
                                         <TextBlock
@@ -1711,13 +1780,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String2}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  段界限  -->
                                         <TextBlock
@@ -1729,13 +1792,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding String3}" />
 
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  特权级  -->
                                         <TextBlock
@@ -1747,13 +1804,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding ULong2}" />
 
-                                        <Border
-                                            Grid.Column="4"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  访问权限  -->
                                         <TextBlock
@@ -1765,13 +1816,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding ULong3}" />
 
-                                        <Border
-                                            Grid.Column="5"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  ID  -->
                                         <TextBlock
@@ -1786,7 +1831,41 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="4"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1842,14 +1921,19 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="PiDDBRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="PiDDBListView"
+                            Grid.ColumnSpan="3"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="PiDDBListView_RightTapped"
-                            Tag="{x:Bind PiDDBRevealFocusPanel}">
+                            RightTapped="PiDDBListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1868,13 +1952,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                                             Text="{Binding String1}" />
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  状态  -->
                                         <TextBlock
@@ -1886,13 +1964,7 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding ULong1}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  时间戳  -->
                                         <TextBlock
@@ -1907,7 +1979,20 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -1954,14 +2039,18 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="HALDPTRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="HALDPTListView"
+                            Grid.ColumnSpan="2"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="HALDPTListView_RightTapped"
-                            Tag="{x:Bind HALDPTRevealFocusPanel}">
+                            RightTapped="HALDPTListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -1982,13 +2071,7 @@
                                                 Text="{Binding String2}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  地址  -->
                                         <TextBlock
@@ -2003,7 +2086,13 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -2050,14 +2139,18 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
-                    <essential:RevealFocusPanel x:Name="HALPDPTRevealFocusPanel">
-                        <ListView
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView
                             x:Name="HALPDPTListView"
+                            Grid.ColumnSpan="2"
                             Background="Transparent"
                             ContainerContentChanging="MonitorListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="HALDPTListView_RightTapped"
-                            Tag="{x:Bind HALPDPTRevealFocusPanel}">
+                            RightTapped="HALDPTListView_RightTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="50">
@@ -2078,13 +2171,7 @@
                                                 Text="{Binding String2}" />
                                         </StackPanel>
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
+                                        
 
                                         <!--  地址  -->
                                         <TextBlock
@@ -2099,9 +2186,23 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
     </Grid>
 </Page>
+
+
+
+
+
+
+
+

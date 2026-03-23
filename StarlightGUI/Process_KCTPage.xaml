@@ -78,20 +78,25 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
                     <ProgressRing
                         x:Name="LoadingRing"
+                        Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         IsActive="False" />
 
-                    <essential:RevealFocusPanel x:Name="KCTListViewRevealFocusPanel">
-                        <ListView
+                    <ListView
+                            Grid.ColumnSpan="2"
                             x:Name="KCTListView"
                             Background="Transparent"
                             ContainerContentChanging="KCTListView_ContainerContentChanging"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                            RightTapped="KCTListView_RightTapped"
-                            Tag="{x:Bind KCTListViewRevealFocusPanel}">
+                            RightTapped="KCTListView_RightTapped">
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -111,14 +116,6 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding Name}" />
 
-                                        <Border
-                                            Grid.Column="1"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
-
                                         <!--  地址  -->
                                         <TextBlock
                                             Grid.Column="1"
@@ -132,7 +129,13 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -142,3 +145,5 @@
             HorizontalAlignment="Right" />
     </Grid>
 </Page>
+
+

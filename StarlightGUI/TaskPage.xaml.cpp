@@ -443,20 +443,15 @@ namespace winrt::StarlightGUI::implementation
             bool shouldRemove = query.empty() ? false : ApplyFilter(process, query);
             if (shouldRemove) continue;
 
-            if (process.Name() == L"Idle" || process.Name() == L"System" || process.Name() == L"Registry") {
-                process.Description(L"系统进程");
-            }
-            else {
-                std::wstring path = process.ExecutablePath().c_str();
-                if (!path.empty()) {
-                    auto key = NormalizeCacheKey(path);
+            std::wstring path = process.ExecutablePath().c_str();
+            if (!path.empty()) {
+                auto key = NormalizeCacheKey(path);
 
-                    auto descIt = descriptionCache.find(key);
-                    if (descIt != descriptionCache.end()) process.Description(descIt->second);
+                auto descIt = descriptionCache.find(key);
+                if (descIt != descriptionCache.end()) process.Description(descIt->second);
 
-                    auto iconIt = iconCache.find(key);
-                    if (iconIt != iconCache.end()) process.Icon(iconIt->second);
-                }
+                auto iconIt = iconCache.find(key);
+                if (iconIt != iconCache.end()) process.Icon(iconIt->second);
             }
 
             visibleProcesses.push_back(process);
@@ -610,7 +605,7 @@ namespace winrt::StarlightGUI::implementation
         for (auto const& process : processes) {
             if (!process) continue;
 
-            if (process.Name() == L"Idle" || process.Name() == L"System" || process.Name() == L"Registry") {
+            if (process.Name() == L"Idle" || process.Name() == L"System" || process.Name() == L"Registry" || process.Name() == L"Secure System" || process.Name() == L"Memory Compression") {
                 descriptionTable[process.Id()] = L"系统进程";
                 continue;
             }
@@ -758,7 +753,6 @@ namespace winrt::StarlightGUI::implementation
         if (!IsLoaded() || loadToken != m_currentLoadToken) co_return;
 
         std::wstring path = process.ExecutablePath().c_str();
-        std::wstring iconPath = path;
         std::wstring cacheKey = NormalizeCacheKey(path);
 
         auto cacheIt = iconCache.find(cacheKey);
@@ -768,10 +762,10 @@ namespace winrt::StarlightGUI::implementation
             co_return;
         }
 
-        auto icon = slg::GetShellIconImage(iconPath, false, 16, false, cacheKey);
-        if (!icon) {
+        auto icon = slg::GetShellIconImage(path, false, 16, false, cacheKey);
+
+        if (!icon || process.Name() == L"Idle" || process.Name() == L"System" || process.Name() == L"Registry" || process.Name() == L"Secure System" || process.Name() == L"Memory Compression" || process.Name() == L"Unknown") {
             icon = slg::GetShellIconImage(L"C:\\Windows\\System32\\ntoskrnl.exe", false, 16, false, L"__ntoskrnl__");
-            if (!icon) co_return;
         }
 
         if (!IsLoaded() || loadToken != m_currentLoadToken) co_return;

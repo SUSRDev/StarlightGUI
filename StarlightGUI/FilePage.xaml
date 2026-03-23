@@ -188,14 +188,21 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,5,5">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+
                     <ProgressRing
                         x:Name="LoadingRing"
+                        Grid.ColumnSpan="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         IsActive="False" />
 
-                    <essential:RevealFocusPanel x:Name="FileListViewRevealFocusPanel">
-                        <ListView
+                    <ListView
+                            Grid.ColumnSpan="3"
                             x:Name="FileListView"
                             AllowDrop="True"
                             Background="Transparent"
@@ -207,8 +214,7 @@
                             IsMultiSelectCheckBoxEnabled="True"
                             ItemContainerStyle="{StaticResource ListViewItemStyle}"
                             RightTapped="FileListView_RightTapped"
-                            SelectionMode="Extended"
-                            Tag="{x:Bind FileListViewRevealFocusPanel}">
+                            SelectionMode="Extended">
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -238,14 +244,6 @@
                                             Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                                             Text="{Binding Name}" />
 
-                                        <Border
-                                            Grid.Column="2"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
-
                                         <!--  修改日期  -->
                                         <TextBlock
                                             Grid.Column="2"
@@ -255,14 +253,6 @@
                                             FontSize="12"
                                             Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                             Text="{Binding ModifyTime}" />
-
-                                        <Border
-                                            Grid.Column="3"
-                                            Margin="12,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Stretch"
-                                            BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                            BorderThickness="0,0,1,0" />
 
                                         <!--  大小  -->
                                         <TextBlock
@@ -278,7 +268,20 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </essential:RevealFocusPanel>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                        BorderThickness="1,0,0,0"
+                        IsHitTestVisible="False" />
                 </Grid>
             </Border>
         </Grid>
@@ -288,3 +291,6 @@
             HorizontalAlignment="Right" />
     </Grid>
 </Page>
+
+
+

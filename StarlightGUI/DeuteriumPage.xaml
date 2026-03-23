@@ -1037,13 +1037,18 @@
                             BorderThickness="0,0,1,1"
                             CornerRadius="0,0,5,0">
                             <Grid>
-                                <essential:RevealFocusPanel x:Name="StackRevealFocusPanel">
-                                    <ListView
-                                        x:Name="StackListView"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+
+                                <ListView
+                                    Grid.ColumnSpan="3"
+                                    x:Name="StackListView"
                                         Background="Transparent"
                                         ContainerContentChanging="StackListView_ContainerContentChanging"
-                                        ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                                        Tag="{x:Bind StackRevealFocusPanel}">
+                                        ItemContainerStyle="{StaticResource ListViewItemStyle}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Height="50">
@@ -1062,14 +1067,6 @@
                                                         Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                                                         Text="{Binding String1}" />
 
-                                                    <Border
-                                                        Grid.Column="1"
-                                                        Margin="12,0,0,0"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Stretch"
-                                                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                                        BorderThickness="0,0,1,0" />
-
                                                     <!--  大小  -->
                                                     <TextBlock
                                                         Grid.Column="1"
@@ -1079,14 +1076,6 @@
                                                         FontSize="12"
                                                         Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                                         Text="{Binding ULong1}" />
-
-                                                    <Border
-                                                        Grid.Column="2"
-                                                        Margin="12,0,0,0"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Stretch"
-                                                        BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                                        BorderThickness="0,0,1,0" />
 
                                                     <!--  是否映射  -->
                                                     <TextBlock
@@ -1101,7 +1090,20 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                </essential:RevealFocusPanel>
+                                <Border
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                    BorderThickness="1,0,0,0"
+                                    IsHitTestVisible="False" />
+                                <Border
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    BorderBrush="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                    BorderThickness="1,0,0,0"
+                                    IsHitTestVisible="False" />
                             </Grid>
                         </Border>
                     </Grid>
@@ -1110,3 +1112,6 @@
         </ScrollViewer>
     </Grid>
 </Page>
+
+
+
