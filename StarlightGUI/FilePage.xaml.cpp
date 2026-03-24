@@ -824,8 +824,10 @@ namespace winrt::StarlightGUI::implementation
         }
 
         winrt::hstring query = hstring(tabSearchText);
+        std::wstring lowerQuery;
+        if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
         for (size_t i = 0; i < m_allFiles.size(); ++i) {
-            bool shouldRemove = query.empty() ? false : ApplyFilter(m_allFiles[i], query);
+            bool shouldRemove = lowerQuery.empty() ? false : !ContainsIgnoreCaseLowerQuery(m_allFiles[i].Name().c_str(), lowerQuery);
             if (shouldRemove) continue;
 
             newFileList.push_back(m_allFiles[i]);
@@ -1135,8 +1137,10 @@ namespace winrt::StarlightGUI::implementation
         }
 
         winrt::hstring query = hstring(tabSearchText);
+        std::wstring lowerQuery;
+        if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
         for (size_t i = 0; i < m_allFiles.size(); ++i) {
-            bool shouldRemove = query.empty() ? false : ApplyFilter(m_allFiles[i], query);
+            bool shouldRemove = lowerQuery.empty() ? false : !ContainsIgnoreCaseLowerQuery(m_allFiles[i].Name().c_str(), lowerQuery);
             if (shouldRemove) continue;
 
             newFileList.Append(m_allFiles[i]);

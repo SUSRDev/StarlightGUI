@@ -470,8 +470,11 @@ namespace winrt::StarlightGUI::implementation
         double verticalOffset = 0.0;
         if (listScrollViewer) verticalOffset = listScrollViewer.VerticalOffset();
 
+        std::wstring lowerQuery;
+        if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
+
         for (auto& process : processes) {
-            bool shouldRemove = query.empty() ? false : ApplyFilter(process, query);
+            bool shouldRemove = lowerQuery.empty() ? false : !ContainsIgnoreCaseLowerQuery(process.Name().c_str(), lowerQuery);
             if (shouldRemove) continue;
 
             // 如果有缓存的话就直接用，不在获取的时候再跑一遍了
@@ -1057,21 +1060,36 @@ namespace winrt::StarlightGUI::implementation
             return;
         }
 
-        for (uint32_t targetIndex = 0; targetIndex < processes.size(); ++targetIndex) {
-            auto desired = processes[targetIndex];
-            auto current = m_processList.GetAt(targetIndex);
-            if (current.Id() == desired.Id()) continue;
+        std::vector<winrt::StarlightGUI::ProcessInfo> reordered;
+        reordered.reserve(m_processList.Size());
+        for (auto const& process : m_processList) {
+            reordered.push_back(process);
+        }
 
-            uint32_t foundIndex = targetIndex + 1;
-            while (foundIndex < m_processList.Size()) {
-                if (m_processList.GetAt(foundIndex).Id() == desired.Id()) {
-                    auto item = m_processList.GetAt(foundIndex);
-                    m_processList.RemoveAt(foundIndex);
-                    m_processList.InsertAt(targetIndex, item);
-                    break;
-                }
-                ++foundIndex;
-            }
+        std::unordered_map<int, uint32_t> indexById;
+        indexById.reserve(reordered.size() * 2);
+        for (uint32_t i = 0; i < reordered.size(); ++i) {
+            indexById[reordered[i].Id()] = i;
+        }
+
+        for (uint32_t targetIndex = 0; targetIndex < processes.size() && targetIndex < reordered.size(); ++targetIndex) {
+            int desiredId = processes[targetIndex].Id();
+            auto desiredIt = indexById.find(desiredId);
+            if (desiredIt == indexById.end()) continue;
+
+            uint32_t currentIndex = desiredIt->second;
+            if (currentIndex == targetIndex) continue;
+
+            int displacedId = reordered[targetIndex].Id();
+            std::swap(reordered[targetIndex], reordered[currentIndex]);
+
+            indexById[desiredId] = targetIndex;
+            indexById[displacedId] = currentIndex;
+        }
+
+        for (uint32_t i = 0; i < reordered.size(); ++i) {
+            if (m_processList.GetAt(i).Id() == reordered[i].Id()) continue;
+            m_processList.SetAt(i, reordered[i]);
         }
     }
 

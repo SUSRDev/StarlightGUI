@@ -29,6 +29,21 @@ namespace slg {
         auto liveCount = listView.Items().Size();
         if (liveCount > itemCount) itemCount = liveCount;
 
+        auto panel = listView.ItemsPanelRoot().try_as<winrt::Microsoft::UI::Xaml::Controls::Panel>();
+        if (panel) {
+            auto children = panel.Children();
+            for (uint32_t i = 0; i < children.Size(); ++i) {
+                auto itemContainer = children.GetAt(i).try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
+                if (!itemContainer) continue;
+
+                auto contentRoot = itemContainer.ContentTemplateRoot().try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>();
+                if (!contentRoot) continue;
+
+                UpdateTextMarqueeByNames(contentRoot, containerName, textBlockName, marqueeName, widthPadding);
+            }
+            return;
+        }
+
         for (uint32_t i = 0; i < itemCount; ++i) {
             auto itemContainer = listView.ContainerFromIndex(i).try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
             if (!itemContainer) continue;

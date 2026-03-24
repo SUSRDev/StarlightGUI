@@ -570,15 +570,12 @@ namespace winrt::StarlightGUI::implementation
     bool HomePage::IsVirtualAdapterName(std::wstring const& name)
     {
         if (name.empty()) return false;
-
-        std::wstring lower = name;
-        std::transform(lower.begin(), lower.end(), lower.begin(), [](wchar_t c) { return static_cast<wchar_t>(towlower(c)); });
         static const std::vector<std::wstring> keys = {
             L"virtual", L"vmware", L"hyper-v", L"vethernet", L"tap", L"tun", L"vpn", L"loopback", L"pseudo", L"bridge", L"bluetooth"
         };
 
         for (auto const& key : keys) {
-            if (lower.find(key) != std::wstring::npos) return true;
+            if (ContainsIgnoreCaseLowerQuery(name, key)) return true;
         }
         return false;
     }

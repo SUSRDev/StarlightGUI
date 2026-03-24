@@ -204,11 +204,13 @@ namespace winrt::StarlightGUI::implementation
         LOG_INFO(__WFUNCTION__, L"Enumerated kernel modules, %d entry(s).", kernelModules.size());
 
         fullRecordedKernelModules = kernelModules;
+        std::wstring lowerQuery;
+        if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
 
         co_await wil::resume_foreground(DispatcherQueue());
 
         for (const auto& kernelModule : kernelModules) {
-            bool shouldRemove = query.empty() ? false : ApplyFilter(kernelModule, query);
+            bool shouldRemove = lowerQuery.empty() ? false : !ContainsIgnoreCaseLowerQuery(kernelModule.Name().c_str(), lowerQuery);
             if (shouldRemove) continue;
 
             if (kernelModule.Name().empty()) kernelModule.Name(L"(未知)");

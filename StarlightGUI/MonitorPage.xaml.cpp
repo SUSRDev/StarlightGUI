@@ -131,6 +131,8 @@ namespace winrt::StarlightGUI::implementation
 		auto lifetime = get_strong();
 		int32_t index = ObjectTreeView().SelectedIndex();
 		hstring query = SearchBox().Text();
+		std::wstring lowerQuery;
+		if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
 
 		co_await winrt::resume_background();
 
@@ -144,7 +146,7 @@ namespace winrt::StarlightGUI::implementation
 
 		m_objectList.Clear();
 		for (const auto& object : objects) {
-			bool shouldRemove = query.empty() ? false : ApplyFilter(object.Name(), query);
+			bool shouldRemove = lowerQuery.empty() ? false : !ContainsIgnoreCaseLowerQuery(object.Name().c_str(), lowerQuery);
 			if (shouldRemove) continue;
 
 			if (object.Name().empty()) object.Name(L"(未知)");
@@ -183,10 +185,13 @@ namespace winrt::StarlightGUI::implementation
 		auto requestedIndex = segmentedIndex;
 		auto lifetime = get_strong();
 		hstring query = SearchBox().Text();
+		std::wstring lowerQuery;
+		if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
 
 		co_await winrt::resume_background();
 
 		std::vector<winrt::StarlightGUI::GeneralEntry> entries;
+		std::vector<winrt::StarlightGUI::GeneralEntry> const* entriesSource = &entries;
 
 		static std::vector<winrt::StarlightGUI::GeneralEntry> callbackCache, minifilterCache, standardfilterCache, ssdtCache, sssdtCache, ioTimerCache, exCallbackCache, idtCache, gdtCache, piddbCache, halDptCache, halPdptCache;
 
@@ -195,85 +200,97 @@ namespace winrt::StarlightGUI::implementation
 			if (force || callbackCache.empty()) {
 				KernelInstance::EnumNotifies(entries);
 				callbackCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = callbackCache;
+			else entriesSource = &callbackCache;
 			break;
 		case 3:
 			if (force || minifilterCache.empty()) {
 				KernelInstance::EnumMiniFilter(entries);
 				minifilterCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = minifilterCache;
+			else entriesSource = &minifilterCache;
 			break;
 		case 4:
 			if (force || standardfilterCache.empty()) {
 				KernelInstance::EnumStandardFilter(entries);
 				standardfilterCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = standardfilterCache;
+			else entriesSource = &standardfilterCache;
 			break;
 		case 5:
 			if (force || ssdtCache.empty()) {
 				KernelInstance::EnumSSDT(entries);
 				ssdtCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = ssdtCache;
+			else entriesSource = &ssdtCache;
 			break;
 		case 6:
 			if (force || sssdtCache.empty()) {
 				KernelInstance::EnumSSSDT(entries);
 				sssdtCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = sssdtCache;
+			else entriesSource = &sssdtCache;
 			break;
 		case 7:
 			if (force || ioTimerCache.empty()) {
 				KernelInstance::EnumIoTimer(entries);
 				ioTimerCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = ioTimerCache;
+			else entriesSource = &ioTimerCache;
 			break;
 		case 8:
 			if (force || exCallbackCache.empty()) {
 				KernelInstance::EnumExCallback(entries);
 				exCallbackCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = exCallbackCache;
+			else entriesSource = &exCallbackCache;
 			break;
 		case 9:
 			if (force || idtCache.empty()) {
 				KernelInstance::EnumIDT(entries);
 				idtCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = idtCache;
+			else entriesSource = &idtCache;
 			break;
 		case 10:
 			if (force || gdtCache.empty()) {
 				KernelInstance::EnumGDT(entries);
 				gdtCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = gdtCache;
+			else entriesSource = &gdtCache;
 			break;
 		case 11:
 			if (force || piddbCache.empty()) {
 				KernelInstance::EnumPiDDBCacheTable(entries);
 				piddbCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = piddbCache;
+			else entriesSource = &piddbCache;
 			break;
 		case 12:
 			if (force || halDptCache.empty()) {
 				KernelInstance::EnumHalDispatchTable(entries);
 				halDptCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = halDptCache;
+			else entriesSource = &halDptCache;
 			break;
 		case 13:
 			if (force || halPdptCache.empty()) {
 				KernelInstance::EnumHalPrivateDispatchTable(entries);
 				halPdptCache = entries;
+				entriesSource = &entries;
 			}
-			else entries = halPdptCache;
+			else entriesSource = &halPdptCache;
 			break;
 		}
 
@@ -286,9 +303,9 @@ namespace winrt::StarlightGUI::implementation
 		}
 
 		m_generalList.Clear();
-		for (const auto& entry : entries) {
+		for (const auto& entry : *entriesSource) {
 			bool shouldRemove = false;
-			if (!query.empty()) {
+			if (!lowerQuery.empty()) {
 				switch (requestedIndex) {
 				case 2:
 				case 3:
@@ -297,16 +314,16 @@ namespace winrt::StarlightGUI::implementation
 				case 8:
 				case 12:
 				case 13:
-					shouldRemove = ApplyFilter(entry.String1(), query) && ApplyFilter(entry.String2(), query);
+					shouldRemove = !ContainsIgnoreCaseLowerQuery(entry.String1().c_str(), lowerQuery) && !ContainsIgnoreCaseLowerQuery(entry.String2().c_str(), lowerQuery);
 					break;
 				case 4:
-					shouldRemove = ApplyFilter(entry.String2(), query) && ApplyFilter(entry.String3(), query);
+					shouldRemove = !ContainsIgnoreCaseLowerQuery(entry.String2().c_str(), lowerQuery) && !ContainsIgnoreCaseLowerQuery(entry.String3().c_str(), lowerQuery);
 					break;
 				case 7:
 				case 9:
 				case 10:
 				case 11:
-					shouldRemove = ApplyFilter(entry.String1(), query);
+					shouldRemove = !ContainsIgnoreCaseLowerQuery(entry.String1().c_str(), lowerQuery);
 					break;
 				}
 			}

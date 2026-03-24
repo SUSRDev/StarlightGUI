@@ -7,6 +7,7 @@
 #include <string>
 #include <random>
 #include <limits>
+#include <climits>
 #include <cwctype>
 #include <fstream>
 #include <algorithm>
@@ -272,6 +273,18 @@ namespace winrt::StarlightGUI::implementation {
 
     int CompareIgnoreCase(std::wstring_view left, std::wstring_view right)
     {
+        if (left.size() <= static_cast<size_t>(INT_MAX) && right.size() <= static_cast<size_t>(INT_MAX)) {
+            int compareResult = CompareStringOrdinal(
+                left.data(), static_cast<int>(left.size()),
+                right.data(), static_cast<int>(right.size()),
+                TRUE);
+            if (compareResult != 0) {
+                if (compareResult == CSTR_LESS_THAN) return -1;
+                if (compareResult == CSTR_GREATER_THAN) return 1;
+                return 0;
+            }
+        }
+
         auto minSize = std::min(left.size(), right.size());
         for (size_t i = 0; i < minSize; ++i) {
             auto lc = ToLowerChar(left[i]);
@@ -290,18 +303,46 @@ namespace winrt::StarlightGUI::implementation {
         return CompareIgnoreCase(left, right) < 0;
     }
 
+    bool ContainsIgnoreCaseLowerQuery(std::wstring_view text, std::wstring_view lowerQuery)
+    {
+        if (lowerQuery.empty()) return true;
+        if (text.size() < lowerQuery.size()) return false;
+
+        const wchar_t first = lowerQuery[0];
+        const size_t lastStart = text.size() - lowerQuery.size();
+
+        for (size_t i = 0; i <= lastStart; ++i) {
+            if (ToLowerChar(text[i]) != first) continue;
+
+            size_t j = 1;
+            while (j < lowerQuery.size() && ToLowerChar(text[i + j]) == lowerQuery[j]) {
+                ++j;
+            }
+            if (j == lowerQuery.size()) return true;
+        }
+
+        return false;
+    }
+
     bool ContainsIgnoreCase(std::wstring_view text, std::wstring_view query)
     {
         if (query.empty()) return true;
         if (text.size() < query.size()) return false;
 
-        auto it = std::search(
-            text.begin(), text.end(),
-            query.begin(), query.end(),
-            [](wchar_t a, wchar_t b) {
-                return ToLowerChar(a) == ToLowerChar(b);
-            });
-        return it != text.end();
+        const wchar_t first = ToLowerChar(query[0]);
+        const size_t lastStart = text.size() - query.size();
+
+        for (size_t i = 0; i <= lastStart; ++i) {
+            if (ToLowerChar(text[i]) != first) continue;
+
+            size_t j = 1;
+            while (j < query.size() && ToLowerChar(text[i + j]) == ToLowerChar(query[j])) {
+                ++j;
+            }
+            if (j == query.size()) return true;
+        }
+
+        return false;
     }
 
     std::wstring FormatMemorySize(double bytes)

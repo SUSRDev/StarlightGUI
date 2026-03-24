@@ -38,6 +38,8 @@ namespace winrt::StarlightGUI::implementation {
 
     bool LessIgnoreCase(std::wstring_view left, std::wstring_view right);
 
+    bool ContainsIgnoreCaseLowerQuery(std::wstring_view text, std::wstring_view lowerQuery);
+
     bool ContainsIgnoreCase(std::wstring_view text, std::wstring_view query);
 
     std::wstring FormatMemorySize(double bytes);

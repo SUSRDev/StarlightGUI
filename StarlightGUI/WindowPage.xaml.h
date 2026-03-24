@@ -25,7 +25,7 @@ namespace winrt::StarlightGUI::implementation
 
         winrt::Windows::Foundation::IAsyncAction LoadWindowList();
         winrt::Windows::Foundation::IAsyncAction GetWindowInfoAsync(std::vector<winrt::StarlightGUI::WindowInfo>& windows);
-        winrt::Windows::Foundation::IAsyncAction GetWindowIconAsync(const winrt::StarlightGUI::WindowInfo& window);
+        void GetWindowIconAsync(const winrt::StarlightGUI::WindowInfo& window);
         winrt::Windows::Foundation::IAsyncAction WaitAndReloadAsync(int interval);
 
         bool SetWindowZBID(HWND hwnd, ZBID zbid);

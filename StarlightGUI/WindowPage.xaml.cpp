@@ -587,16 +587,18 @@ namespace winrt::StarlightGUI::implementation
         LOG_INFO(__WFUNCTION__, L"Enumerated windows, %d entry(s).", windows.size());
 
         lastRefresh = std::chrono::steady_clock::now();
+        std::wstring lowerQuery;
+        if (!query.empty()) lowerQuery = ToLowerCase(query.c_str());
 
         co_await wil::resume_foreground(DispatcherQueue());
 
         for (const auto& window : windows) {
-            bool shouldRemove = query.empty() ? false : ApplyFilter(window, query);
+            bool shouldRemove = lowerQuery.empty() ? false : !ContainsIgnoreCaseLowerQuery(window.Name().c_str(), lowerQuery);
             if (shouldRemove) continue;
 
             if (!(HWND)window.Hwnd()) continue;
 
-            co_await GetWindowIconAsync(window);
+            GetWindowIconAsync(window);
 
             if (window.Name().empty()) window.Name(L"(未知)");
             if (window.Process().empty()) window.Process(L"(未知)");
@@ -697,31 +699,32 @@ namespace winrt::StarlightGUI::implementation
         co_return;
     }
 
-    winrt::Windows::Foundation::IAsyncAction WindowPage::GetWindowIconAsync(const winrt::StarlightGUI::WindowInfo& window) {
-        if (iconCache.find(window.Name()) == iconCache.end()) {
+    void WindowPage::GetWindowIconAsync(const winrt::StarlightGUI::WindowInfo& window) {
+        auto cacheKey = window.Name();
+        auto cacheIt = iconCache.find(cacheKey);
+
+        if (cacheIt == iconCache.end()) {
 			// 获取窗口图标 ICON
             HICON hIcon = (HICON)GetClassLongPtrW((HWND)window.Hwnd(), GCLP_HICON);
             if (!hIcon)
                 hIcon = (HICON)GetClassLongPtrW((HWND)window.Hwnd(), GCLP_HICONSM);
             if (!hIcon)
 				hIcon = (HICON)LoadImageW(NULL, MAKEINTRESOURCEW(32512), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_SHARED);
-            if (!hIcon) co_return;
+            if (!hIcon) return;
             auto iconSource = slg::CreateImageSourceFromHIcon(hIcon, 16, false);
-            if (!iconSource) co_return;
+            if (!iconSource) return;
 
-            iconCache[window.Name()] = iconSource;
+            iconCache.insert_or_assign(cacheKey, iconSource);
             window.Icon(iconSource);
         }
         else {
-            if (iconCache[window.Name()].has_value()) {
-                window.Icon(iconCache[window.Name()].value());
+            if (cacheIt->second.has_value()) {
+                window.Icon(cacheIt->second.value());
             }
             else {
                 LOG_WARNING(__WFUNCTION__, L"File icon path (%s) does not have a value!", window.Name().c_str());
             }
         }
-
-        co_return;
     }
 
     bool WindowPage::SetWindowZBID(HWND hwnd, ZBID zbid) {
