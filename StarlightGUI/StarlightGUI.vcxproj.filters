@@ -295,6 +295,9 @@
     <Filter Include="Utils\Elements">
       <UniqueIdentifier>{c581fe4b-97e8-4bc6-ba36-991d8c2d2052}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings">
+      <UniqueIdentifier>{c7b9ce89-4b1d-4784-9a3f-2b4f4d7e6670}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="app.manifest" />
@@ -302,6 +305,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="StarlightGUI_TemporaryKey.pfx" />
+    <None Include="Strings\en-US\Resources.json">
+      <Filter>Strings</Filter>
+    </None>
+    <None Include="Strings\zh-CN\Resources.json">
+      <Filter>Strings</Filter>
+    </None>
     <None Include="Assets\kernel.sys">
       <Filter>Assets</Filter>
     </None>

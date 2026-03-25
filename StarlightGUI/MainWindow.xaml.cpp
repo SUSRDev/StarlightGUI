@@ -519,12 +519,12 @@ namespace winrt::StarlightGUI::implementation
 
                     if (GetLastError() == 2 || GetLastError() == 98) {
                         co_await wil::resume_foreground(DispatcherQueue());
-                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_LoadKernelAntiVirus").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_FailedHelp1").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
                         co_await winrt::resume_background();
                     }
                     else if (GetLastError() == 193) {
                         co_await wil::resume_foreground(DispatcherQueue());
-                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_LoadKernelIsolation").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_FailedHelp2").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
                         co_await winrt::resume_background();
                     }
                 }
@@ -539,11 +539,11 @@ namespace winrt::StarlightGUI::implementation
 
                     if (GetLastError() == 2 || GetLastError() == 98) {
                         co_await wil::resume_foreground(DispatcherQueue());
-                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_LoadKernelAntiVirus").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_FailedHelp1").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
                     }
                     else if (GetLastError() == 193) {
                         co_await wil::resume_foreground(DispatcherQueue());
-                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_LoadKernelIsolation").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                        slg::CreateInfoBarAndDisplay(GetLocalizedString(L"Msg_Error").c_str(), GetLocalizedString(L"MainWindow_FailedHelp2").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
                     }
                 }
 

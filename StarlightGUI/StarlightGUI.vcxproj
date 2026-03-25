@@ -371,7 +371,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <!-- JSON-based i18n — resw files removed, using Strings/<lang>/Resources.json instead -->
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="CopyFileDialog.xaml.cpp">
