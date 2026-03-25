@@ -7,12 +7,12 @@
     xmlns:essential="using:WinUI3Package"
     xmlns:local="using:StarlightGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="InjectDLLDialogUid" Title="注入DLL"
+    x:Name="InjectDLLDialogUid"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
-    PrimaryButtonText="注入"
+    PrimaryButtonText=""
     RequestedTheme="Dark"
-    SecondaryButtonText="取消"
+    SecondaryButtonText=""
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -36,13 +36,16 @@
 
         <!--  输入框  -->
         <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Margin="0,0,0,20" Text="Starlight GUI 将根据选定 DLL 文件路径，注入文件至指定进程。" />
+            <TextBlock
+                x:Name="InjectDLLDescriptionText"
+                Margin="0,0,0,20" />
             <TextBox
                 x:Name="DLLPathTextBox"
                 Margin="0,0,0,10"
-                HorizontalAlignment="Stretch"
-                PlaceholderText="文件路径..." />
-            <Button Click="ExploreButton_Click" Content="浏览..." />
+                HorizontalAlignment="Stretch" />
+            <Button
+                x:Name="ExploreButton"
+                Click="ExploreButton_Click" />
             <TextBlock
                 x:Name="ErrorText"
                 Foreground="Red"

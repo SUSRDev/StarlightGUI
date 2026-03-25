@@ -7,12 +7,12 @@
     xmlns:essential="using:WinUI3Package"
     xmlns:local="using:StarlightGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="LoadDriverDialogUid" Title="加载驱动"
+    x:Name="LoadDriverDialogUid"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
-    PrimaryButtonText="加载"
+    PrimaryButtonText=""
     RequestedTheme="Dark"
-    SecondaryButtonText="取消"
+    SecondaryButtonText=""
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -32,16 +32,18 @@
     <Grid>
         <!--  输入框  -->
         <StackPanel Margin="0,0,0,10">
-            <TextBlock Margin="0,0,0,20" Text="Starlight GUI 将根据选定驱动文件路径，加载目标驱动文件至系统中。" />
+            <TextBlock
+                x:Name="LoadDriverDescriptionText"
+                Margin="0,0,0,20" />
             <TextBox
                 x:Name="DriverPathTextBox"
                 Margin="0,0,0,10"
-                HorizontalAlignment="Stretch"
-                PlaceholderText="文件路径..." />
-            <Button Click="ExploreButton_Click" Content="浏览..." />
+                HorizontalAlignment="Stretch" />
+            <Button
+                x:Name="ExploreButton"
+                Click="ExploreButton_Click" />
             <CheckBox
                 x:Name="BypassCheckBox"
-                Content="绕过驱动签名检测"
                 IsChecked="False" />
             <TextBlock
                 x:Name="ErrorText"

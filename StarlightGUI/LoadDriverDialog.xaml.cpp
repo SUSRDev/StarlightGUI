@@ -17,6 +17,12 @@ namespace winrt::StarlightGUI::implementation
         InitializeComponent();
 
         this->Title(tbox(L"LoadDriver_Dialog.Title"));
+        this->PrimaryButtonText(GetLocalizedString(L"LoadDriver_Dialog.PrimaryButtonText"));
+        this->SecondaryButtonText(GetLocalizedString(L"LoadDriver_Dialog.SecondaryButtonText"));
+        LoadDriverDescriptionText().Text(GetLocalizedString(L"LoadDriver_Description.Text"));
+        DriverPathTextBox().PlaceholderText(GetLocalizedString(L"LoadDriver_Path.PlaceholderText"));
+        ExploreButton().Content(tbox(L"LoadDriver_Browse.Content"));
+        BypassCheckBox().Content(tbox(L"LoadDriver_Bypass.Content"));
 
         if (hypervisor_mode) BypassCheckBox().Content(tbox(L"LoadDriver_BypassDSE"));
     }

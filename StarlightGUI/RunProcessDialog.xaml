@@ -7,12 +7,12 @@
     xmlns:essential="using:WinUI3Package"
     xmlns:local="using:StarlightGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="RunProcessDialogUid" Title="运行新进程"
+    x:Name="RunProcessDialogUid"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
-    PrimaryButtonText="运行"
+    PrimaryButtonText=""
     RequestedTheme="Dark"
-    SecondaryButtonText="取消"
+    SecondaryButtonText=""
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -31,26 +31,26 @@
 
     <Grid>
         <StackPanel Margin="0,0,0,10">
-            <TextBlock Margin="0,0,0,20" Text="Starlight GUI 将根据你所键入的名称，打开相应的程序。" />
+            <TextBlock
+                x:Name="RunProcessDescriptionText"
+                Margin="0,0,0,20" />
             <TextBox
                 x:Name="ProcessPathTextBox"
                 Margin="0,0,0,10"
-                HorizontalAlignment="Stretch"
-                PlaceholderText="进程名..." />
+                HorizontalAlignment="Stretch" />
 
             <ComboBox
                 x:Name="PermissionComboBox"
                 essential:ComboBoxHelper.AcrylicWorkaround="True"
                 ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                 SelectedIndex="1"
-                Text="进程权限">
-                <ComboBoxItem Content="Administator" />
+                Text="">
+                <ComboBoxItem x:Name="AdministratorComboBoxItem" Content="Administator" />
                 <ComboBoxItem x:Name="TIComboBoxItem" Content="TrustedInstaller" />
             </ComboBox>
 
             <CheckBox
                 x:Name="FullPrivilegesCheckBox"
-                Content="启用完整特权 (TrustedInstaller)"
                 IsChecked="False" />
         </StackPanel>
     </Grid>

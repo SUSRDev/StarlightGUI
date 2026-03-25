@@ -1191,13 +1191,13 @@ namespace winrt::StarlightGUI::implementation
         if (activeColumn == SortColumn::Unknown) return;
 
         if (updateHeader) {
-            NameHeaderButton().Content(tbox(L"File_ColFile_Text"));
-            ModifyTimeHeaderButton().Content(tbox(L"File_ColModifyTime_Text"));
-            SizeHeaderButton().Content(tbox(L"File_ColSize_Text"));
+            NameHeaderButton().Content(tbox(L"File_ColFile.Content"));
+            ModifyTimeHeaderButton().Content(tbox(L"File_ColModifyTime.Content"));
+            SizeHeaderButton().Content(tbox(L"File_ColSize.Content"));
 
-            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(isAscending ? tbox(L"File_ColFile_Down") : tbox(L"File_ColFile_Up"));
-            if (activeColumn == SortColumn::ModifyTime) ModifyTimeHeaderButton().Content(isAscending ? tbox(L"File_ColModifyTime_Down") : tbox(L"File_ColModifyTime_Up"));
-            if (activeColumn == SortColumn::Size) SizeHeaderButton().Content(isAscending ? tbox(L"File_ColSize_Down") : tbox(L"File_ColSize_Up"));
+            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(box_value(GetLocalizedString(L"File_ColFile.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::ModifyTime) ModifyTimeHeaderButton().Content(box_value(GetLocalizedString(L"File_ColModifyTime.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::Size) SizeHeaderButton().Content(box_value(GetLocalizedString(L"File_ColSize.Content") + (isAscending ? L" ↓" : L" ↑")));
         }
 
         auto sortActiveColumn = [&](const winrt::StarlightGUI::FileInfo& a, const winrt::StarlightGUI::FileInfo& b) -> bool {
@@ -1349,6 +1349,7 @@ namespace winrt::StarlightGUI::implementation
         }
     }
 }
+
 
 
 

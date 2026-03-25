@@ -29,6 +29,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
+                    x:Name="HandleTitleText"
                     Grid.Column="0"
                     VerticalAlignment="Center"
                     FontSize="18"
@@ -58,12 +59,14 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button
+                        x:Name="TypeHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="类型"
                         CornerRadius="0" />
                     <Button
+                        x:Name="ObjectHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -72,6 +75,7 @@
                         Content="地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="HandleHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -80,6 +84,7 @@
                         Content="句柄"
                         CornerRadius="0" />
                     <Button
+                        x:Name="AccessHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -88,6 +93,7 @@
                         Content="权限"
                         CornerRadius="0" />
                     <Button
+                        x:Name="AttributesHeaderButton"
                         Grid.Column="4"
                         Height="32"
                         HorizontalAlignment="Stretch"

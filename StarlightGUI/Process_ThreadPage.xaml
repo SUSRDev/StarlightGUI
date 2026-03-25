@@ -29,6 +29,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
+                    x:Name="ThreadTitleText"
                     Grid.Column="0"
                     VerticalAlignment="Center"
                     FontSize="18"
@@ -90,6 +91,7 @@
                         CornerRadius="0"
                         Tag="Address" />
                     <Button
+                        x:Name="StatusHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -109,6 +111,7 @@
                         CornerRadius="0"
                         Tag="Priority" />
                     <Button
+                        x:Name="ModuleHeaderButton"
                         Grid.Column="5"
                         Height="32"
                         HorizontalAlignment="Stretch"

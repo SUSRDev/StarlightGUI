@@ -41,6 +41,13 @@ namespace winrt::StarlightGUI::implementation
     Process_ThreadPage::Process_ThreadPage() {
         InitializeComponent();
 
+        ThreadTitleText().Text(GetLocalizedString(L"ProcThread_Title.Text"));
+        ThreadCountText().Text(GetLocalizedString(L"ProcThread_Loading.Text"));
+        AddressHeaderButton().Content(tbox(L"ProcThread_HeaderAddress.Content"));
+        StatusHeaderButton().Content(tbox(L"ProcThread_HeaderStatus.Content"));
+        PriorityHeaderButton().Content(tbox(L"ProcThread_HeaderPriority.Content"));
+        ModuleHeaderButton().Content(tbox(L"ProcThread_HeaderModule.Content"));
+
         ThreadListView().ItemsSource(m_threadList);
 
         this->Loaded([this](auto&&, auto&&) {
@@ -216,9 +223,7 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         // 更新线程数量文本
-        std::wstringstream countText;
-        countText << GetLocalizedString(L"ProcThread_CountPrefix").c_str() << L" " << m_threadList.Size() << L" " << GetLocalizedString(L"ProcThread_CountSuffix").c_str() << L" (" << duration.count() << " ms)";
-        ThreadCountText().Text(countText.str());
+    ThreadCountText().Text(t(L"ProcThread_Count", static_cast<size_t>(m_threadList.Size()), static_cast<long long>(duration.count())));
         LoadingRing().IsActive(false);
 
         LOG_INFO(__WFUNCTION__, L"Loaded thread list, %d entry(s) in total.", m_threadList.Size());
@@ -287,13 +292,13 @@ namespace winrt::StarlightGUI::implementation
         if (updateHeader) {
             IdHeaderButton().Content(box_value(L"TID"));
             EThreadHeaderButton().Content(box_value(L"ETHREAD"));
-            AddressHeaderButton().Content(tbox(L"ProcThread_HeaderAddress"));
-            PriorityHeaderButton().Content(tbox(L"ProcThread_HeaderPriority"));
+            AddressHeaderButton().Content(tbox(L"ProcThread_HeaderAddress.Content"));
+            PriorityHeaderButton().Content(tbox(L"ProcThread_HeaderPriority.Content"));
 
             if (activeColumn == SortColumn::Id) IdHeaderButton().Content(box_value(isAscending ? L"TID \u2193" : L"TID \u2191"));
             if (activeColumn == SortColumn::EThread) EThreadHeaderButton().Content(box_value(isAscending ? L"ETHREAD \u2193" : L"ETHREAD \u2191"));
-            if (activeColumn == SortColumn::Address) AddressHeaderButton().Content(box_value(isAscending ? GetLocalizedString(L"ProcThread_HeaderAddress") + L" \u2193" : GetLocalizedString(L"ProcThread_HeaderAddress") + L" \u2191"));
-            if (activeColumn == SortColumn::Priority) PriorityHeaderButton().Content(box_value(isAscending ? GetLocalizedString(L"ProcThread_HeaderPriority") + L" \u2193" : GetLocalizedString(L"ProcThread_HeaderPriority") + L" \u2191"));
+            if (activeColumn == SortColumn::Address) AddressHeaderButton().Content(box_value(isAscending ? GetLocalizedString(L"ProcThread_HeaderAddress.Content") + L" \u2193" : GetLocalizedString(L"ProcThread_HeaderAddress.Content") + L" \u2191"));
+            if (activeColumn == SortColumn::Priority) PriorityHeaderButton().Content(box_value(isAscending ? GetLocalizedString(L"ProcThread_HeaderPriority.Content") + L" \u2193" : GetLocalizedString(L"ProcThread_HeaderPriority.Content") + L" \u2191"));
         }
 
         std::vector<winrt::StarlightGUI::ThreadInfo> sortedThreads;
@@ -348,6 +353,8 @@ namespace winrt::StarlightGUI::implementation
         }
     }
 }
+
+
 
 
 

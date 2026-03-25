@@ -39,6 +39,12 @@ namespace winrt::StarlightGUI::implementation
     Process_ModulePage::Process_ModulePage() {
         InitializeComponent();
 
+        ModuleTitleText().Text(GetLocalizedString(L"ProcModule_Title.Text"));
+        ModuleCountText().Text(GetLocalizedString(L"ProcModule_Loading.Text"));
+        ModuleNameHeaderButton().Content(tbox(L"ProcModule_HeaderName.Content"));
+        AddressHeaderButton().Content(tbox(L"ProcModule_HeaderAddress.Content"));
+        SizeHeaderButton().Content(tbox(L"ProcModule_HeaderSize.Content"));
+
         ModuleListView().ItemsSource(m_moduleList);
         ModuleListView().SizeChanged([weak = get_weak()](auto&&, auto&&) {
             if (auto self = weak.get()) {
@@ -185,9 +191,7 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         // 更新模块数量文本
-        std::wstringstream countText;
-        countText << GetLocalizedString(L"ProcModule_CountPrefix").c_str() << L" " << m_moduleList.Size() << L" " << GetLocalizedString(L"ProcModule_CountSuffix").c_str() << L" (" << duration.count() << " ms)";
-        ModuleCountText().Text(countText.str());
+    ModuleCountText().Text(t(L"ProcModule_Count", static_cast<size_t>(m_moduleList.Size()), static_cast<long long>(duration.count())));
         LoadingRing().IsActive(false);
         slg::UpdateVisibleListViewMarqueeByNames(
             ModuleListView(),
@@ -199,6 +203,8 @@ namespace winrt::StarlightGUI::implementation
         LOG_INFO(__WFUNCTION__, L"Loaded module list, %d entry(s) in total.", m_moduleList.Size());
     }
 }
+
+
 
 
 

@@ -586,9 +586,7 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // 更新进程数量文本
-        std::wstringstream countText;
-        countText << GetLocalizedString(L"Task_ProcessCount_Prefix").c_str() << m_processList.Size() << GetLocalizedString(L"Task_ProcessCount_Suffix").c_str() << L" (" << duration << " ms)";
-        ProcessCountText().Text(countText.str());
+        ProcessCountText().Text(t(L"Task_ProcessCount", static_cast<size_t>(m_processList.Size()), static_cast<long long>(duration)));
         if (fullReload) {
             LoadingRing().IsActive(false);
         }
@@ -963,10 +961,10 @@ namespace winrt::StarlightGUI::implementation
         if (activeColumn == SortColumn::Unknown) return;
 
         if (updateHeader) {
-            NameHeaderButton().Content(tbox(L"Task_ColProcess_Text"));
+            NameHeaderButton().Content(tbox(L"Task_ColProcess.Content"));
             EProcessHeaderButton().Content(box_value(L"EPROCESS"));
             CpuHeaderButton().Content(box_value(L"CPU"));
-            MemoryHeaderButton().Content(tbox(L"Task_ColMemory_Text"));
+            MemoryHeaderButton().Content(tbox(L"Task_ColMemory.Content"));
             IdHeaderButton().Content(box_value(L"PID"));
         }
 
@@ -997,10 +995,10 @@ namespace winrt::StarlightGUI::implementation
         }
 
         if (updateHeader) {
-            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(isAscending ? tbox(L"Task_ColProcess_Down") : tbox(L"Task_ColProcess_Up"));
+            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(box_value(GetLocalizedString(L"Task_ColProcess.Content") + (isAscending ? L" ↓" : L" ↑")));
             if (activeColumn == SortColumn::EProcess) EProcessHeaderButton().Content(box_value(isAscending ? L"EPROCESS \u2193" : L"EPROCESS \u2191"));
             if (activeColumn == SortColumn::CpuUsage) CpuHeaderButton().Content(box_value(isAscending ? L"CPU \u2193" : L"CPU \u2191"));
-            if (activeColumn == SortColumn::MemoryUsage) MemoryHeaderButton().Content(isAscending ? tbox(L"Task_ColMemory_Down") : tbox(L"Task_ColMemory_Up"));
+            if (activeColumn == SortColumn::MemoryUsage) MemoryHeaderButton().Content(box_value(GetLocalizedString(L"Task_ColMemory.Content") + (isAscending ? L" ↓" : L" ↑")));
             if (activeColumn == SortColumn::Id) IdHeaderButton().Content(box_value(isAscending ? L"PID \u2193" : L"PID \u2191"));
         }
 

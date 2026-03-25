@@ -7,12 +7,12 @@
     xmlns:essential="using:WinUI3Package"
     xmlns:local="using:StarlightGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="CopyFileDialogUid" Title="复制文件"
+    x:Name="CopyFileDialogUid"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
-    PrimaryButtonText="复制"
+    PrimaryButtonText=""
     RequestedTheme="Dark"
-    SecondaryButtonText="取消"
+    SecondaryButtonText=""
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -32,13 +32,16 @@
     <Grid>
         <!--  输入框  -->
         <StackPanel Margin="0,0,0,10">
-            <TextBlock Margin="0,0,0,20" Text="Starlight GUI 将会把选定的文件/文件夹复制至指定路径。" />
+            <TextBlock
+                x:Name="CopyFileDescriptionText"
+                Margin="0,0,0,20" />
             <TextBox
                 x:Name="CopyPathTextBox"
                 Margin="0,0,0,10"
-                HorizontalAlignment="Stretch"
-                PlaceholderText="文件路径..." />
-            <Button Click="ExploreButton_Click" Content="浏览..." />
+                HorizontalAlignment="Stretch" />
+            <Button
+                x:Name="ExploreButton"
+                Click="ExploreButton_Click" />
         </StackPanel>
     </Grid>
 </ContentDialog>

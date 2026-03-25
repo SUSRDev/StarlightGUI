@@ -7,12 +7,12 @@
     xmlns:essential="using:WinUI3Package"
     xmlns:local="using:StarlightGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="ModifyTokenDialogUid" Title="修改进程令牌"
+    x:Name="ModifyTokenDialogUid"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
-    PrimaryButtonText="修改"
+    PrimaryButtonText=""
     RequestedTheme="Dark"
-    SecondaryButtonText="取消"
+    SecondaryButtonText=""
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
@@ -31,14 +31,16 @@
 
     <Grid>
         <StackPanel Margin="0,0,0,10">
-            <TextBlock Margin="0,0,0,10" Text="Starlight GUI 将修改指定进程的令牌至选定权限类型。" />
+            <TextBlock
+                x:Name="ModifyTokenDescriptionText"
+                Margin="0,0,0,10" />
 
             <ComboBox
                 x:Name="TokenComboBox"
                 essential:ComboBoxHelper.AcrylicWorkaround="True"
                 ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                 SelectedIndex="0"
-                Text="令牌">
+                Text="">
                 <ComboBoxItem Content="System" />
                 <ComboBoxItem Content="TrustedInstaller" />
                 <ComboBoxItem Content="DWM" />

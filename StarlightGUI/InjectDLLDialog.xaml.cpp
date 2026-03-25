@@ -19,7 +19,11 @@ namespace winrt::StarlightGUI::implementation
         InitializeComponent();
 
         this->Title(tbox(L"InjectDLL_Dialog.Title"));
+        this->PrimaryButtonText(GetLocalizedString(L"InjectDLL_Dialog.PrimaryButtonText"));
+        this->SecondaryButtonText(GetLocalizedString(L"InjectDLL_Dialog.SecondaryButtonText"));
+        InjectDLLDescriptionText().Text(GetLocalizedString(L"InjectDLL_Description.Text"));
         DLLPathTextBox().PlaceholderText(GetLocalizedString(L"InjectDLL_Path.PlaceholderText"));
+        ExploreButton().Content(tbox(L"InjectDLL_Browse.Content"));
     }
 
     void InjectDLLDialog::OnPrimaryButtonClick(ContentDialog const& sender,

@@ -88,7 +88,7 @@
                                 FontFamily="Segoe Fluent Icons"
                                 FontSize="14"
                                 Glyph="&#xf0b9;" />
-                            <TextBlock Text="SSDT" />
+                            <TextBlock x:Name="MonitorSegSSDTUid" Text="SSDT" />
                         </StackPanel>
                     </essential:SegmentedItem>
                     <essential:SegmentedItem x:Name="SSSDTSegmentedItem">
@@ -97,7 +97,7 @@
                                 FontFamily="Segoe Fluent Icons"
                                 FontSize="14"
                                 Glyph="&#xe727;" />
-                            <TextBlock Text="Shadow SSDT" />
+                            <TextBlock x:Name="MonitorSegSSSDTUid" Text="Shadow SSDT" />
                         </StackPanel>
                     </essential:SegmentedItem>
                     <essential:SegmentedItem x:Name="IoTimerSegmentedItem">
@@ -115,7 +115,7 @@
                                 FontFamily="Segoe Fluent Icons"
                                 FontSize="14"
                                 Glyph="&#xe7f2;" />
-                            <TextBlock Text="ExCallback" />
+                            <TextBlock x:Name="MonitorSegExCallbackUid" Text="ExCallback" />
                         </StackPanel>
                     </essential:SegmentedItem>
                     <essential:SegmentedItem x:Name="IDTSegmentedItem">
@@ -259,12 +259,14 @@
                         </Grid.ColumnDefinitions>
 
                         <Button
+                            x:Name="ObjectNameHeaderButton"
                             Grid.Column="0"
                             Height="32"
                             HorizontalAlignment="Stretch"
                             Content="名称"
                             CornerRadius="0" />
                         <Button
+                            x:Name="ObjectTypeHeaderButton"
                             Grid.Column="1"
                             Height="32"
                             HorizontalAlignment="Stretch"
@@ -379,13 +381,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button
-                    x:Name="DbgViewButton"
+                    <Button
+                        x:Name="DbgViewButton"
                     Grid.Column="0"
                     Click="DbgViewButton_Click"
                     Content="开启" />
-                <CheckBox
-                    x:Name="DbgViewGlobalCheckBox"
+                    <CheckBox
+                        x:Name="DbgViewGlobalCheckBox"
                     Grid.Column="2"
                     Margin="0,0,-30,0"
                     Click="DbgViewGlobalCheckBox_Click"
@@ -428,12 +430,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="CallbackTypeModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="类型/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="CallbackEntryHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -442,6 +446,7 @@
                         Content="入口"
                         CornerRadius="0" />
                     <Button
+                        x:Name="CallbackHandleHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -573,12 +578,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="MiniFilterIRPModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="IRP/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="MiniFilterBaseHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -587,6 +594,7 @@
                         Content="基址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="MiniFilterPreFilterHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -595,6 +603,7 @@
                         Content="PreFilter"
                         CornerRadius="0" />
                     <Button
+                        x:Name="MiniFilterPostFilterHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -747,12 +756,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="StdFilterDriverModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="驱动/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="StdFilterTypeHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -761,6 +772,7 @@
                         Content="类型"
                         CornerRadius="0" />
                     <Button
+                        x:Name="StdFilterDeviceObjectHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -769,6 +781,7 @@
                         Content="设备对象"
                         CornerRadius="0" />
                     <Button
+                        x:Name="StdFilterTargetDriverObjectHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -922,12 +935,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="SSDTNameModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="名称/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSDTHookHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -936,6 +951,7 @@
                         Content="钩子"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSDTAddressHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -944,6 +960,7 @@
                         Content="地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSDTSourceAddressHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -952,6 +969,7 @@
                         Content="源地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSDTIndexHeaderButton"
                         Grid.Column="4"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1112,12 +1130,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="SSSDTNameModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="名称/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSSDTHookHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1126,6 +1146,7 @@
                         Content="钩子"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSSDTAddressHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1134,6 +1155,7 @@
                         Content="地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSSDTSourceAddressHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1142,6 +1164,7 @@
                         Content="源地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="SSSDTIndexHeaderButton"
                         Grid.Column="4"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1300,12 +1323,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="IoTimerModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IoTimerAddressHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1314,6 +1339,7 @@
                         Content="地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IoTimerCPUHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1449,6 +1475,7 @@
                         Content="对象"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IoTimerIndexHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1601,12 +1628,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="ExCallbackNameModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="ExCallbackEntryHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1615,6 +1644,7 @@
                         Content="地址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="ExCallbackObjectHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1623,6 +1653,7 @@
                         Content="CPU"
                         CornerRadius="0" />
                     <Button
+                        x:Name="ExCallbackHandleHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1759,12 +1790,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="IDTNameHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="名称"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IDTBaseHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1773,6 +1806,7 @@
                         Content="基址"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IDTLimitHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1781,6 +1815,7 @@
                         Content="段界限"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IDTPrivilegeHeaderButton"
                         Grid.Column="3"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1789,6 +1824,7 @@
                         Content="特权级"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IDTAccessHeaderButton"
                         Grid.Column="4"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1797,6 +1833,7 @@
                         Content="访问权限"
                         CornerRadius="0" />
                     <Button
+                        x:Name="IDTIdHeaderButton"
                         Grid.Column="5"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1972,12 +2009,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="PiDDBModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="PiDDBStatusHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -1986,6 +2025,7 @@
                         Content="状态"
                         CornerRadius="0" />
                     <Button
+                        x:Name="PiDDBTimestampHeaderButton"
                         Grid.Column="2"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -2098,12 +2138,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="HALDPTNameModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="名称/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="HALDPTAddressHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"
@@ -2198,12 +2240,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="HALPDPTNameModuleHeaderButton"
                         Grid.Column="0"
                         Height="32"
                         HorizontalAlignment="Stretch"
                         Content="名称/模块"
                         CornerRadius="0" />
                     <Button
+                        x:Name="HALPDPTAddressHeaderButton"
                         Grid.Column="1"
                         Height="32"
                         HorizontalAlignment="Stretch"

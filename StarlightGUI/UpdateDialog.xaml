@@ -31,28 +31,28 @@
             x:Name="UpdateStackPanel"
             Margin="0,0,0,10"
             Visibility="Collapsed">
-            <TextBlock Text="检测到新版本的 Starlight GUI 可用！" />
+            <TextBlock x:Name="NewVersionAvailableText" />
             <TextBlock>
-                <Run Text="当前版本:" />
+                <Run x:Name="CurrentVersionLabelRun" />
                 <Run Text="{StaticResource Version}" />
             </TextBlock>
             <TextBlock Margin="0,0,0,10">
-                <Run Text="最新版本:" />
+                <Run x:Name="LatestVersionLabelRun" />
                 <Run x:Name="LatestVersionText" />
             </TextBlock>
-            <TextBlock Text="您可以通过这个对话框直接打开下载网页，或选择不进行更新。" />
+            <TextBlock x:Name="UpdateDescriptionText" />
             <TextBlock
+                x:Name="UpdateTipText"
                 Margin="0,0,0,10"
                 FontSize="12"
-                Foreground="LightGray"
-                Text="Tips: 可以在设置里修改是否检测更新" />
+                Foreground="LightGray" />
             <Border
                 Height="1"
                 Margin="0,0,0,10"
                 HorizontalAlignment="Stretch"
                 Background="LightGray" />
-            <TextBlock Text="夸克网盘提取码: vVmj " />
-            <TextBlock Text="本软件依靠网盘转存拉新来获取一些收益，所以不提供直链下载，敬请理解！" />
+            <TextBlock x:Name="QuarkCodeText" />
+            <TextBlock x:Name="NoDirectLinkText" />
         </StackPanel>
         <StackPanel
             x:Name="AnnouncementStackPanel"
@@ -65,12 +65,11 @@
                 Margin="0,0,0,10"
                 FontSize="12"
                 Foreground="LightGray">
-                <Run Text="更新日期:" />
+                <Run x:Name="UpdateTimeLabelRun" />
                 <Run x:Name="UpdateTimeText" />
             </TextBlock>
             <CheckBox
                 x:Name="DontShowAgainCheckBox"
-                Content="今日不再显示"
                 IsChecked="False" />
         </StackPanel>
     </Grid>

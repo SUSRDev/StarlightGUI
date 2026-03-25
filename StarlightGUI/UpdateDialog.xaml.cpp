@@ -11,7 +11,15 @@ namespace winrt::StarlightGUI::implementation
 {
     UpdateDialog::UpdateDialog() {
         InitializeComponent();
-        DontShowAgainCheckBox().Content(tbox(L"Update_DontShow"));
+        NewVersionAvailableText().Text(GetLocalizedString(L"Update_NewVersionAvailable.Text"));
+        CurrentVersionLabelRun().Text(GetLocalizedString(L"Update_CurrentVersion.Text"));
+        LatestVersionLabelRun().Text(GetLocalizedString(L"Update_LatestVersion.Text"));
+        UpdateDescriptionText().Text(GetLocalizedString(L"Update_Description.Text"));
+        UpdateTipText().Text(GetLocalizedString(L"Update_Tip.Text"));
+        QuarkCodeText().Text(GetLocalizedString(L"Update_QuarkCode.Text"));
+        NoDirectLinkText().Text(GetLocalizedString(L"Update_NoDirectLink.Text"));
+        UpdateTimeLabelRun().Text(GetLocalizedString(L"Update_UpdateTimeLabel.Text"));
+        DontShowAgainCheckBox().Content(tbox(L"Update_DontShow.Content"));
 
         this->Loaded([this](auto&&, auto&&) {
             if (IsUpdate()) {

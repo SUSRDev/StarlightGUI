@@ -38,6 +38,14 @@ namespace winrt::StarlightGUI::implementation
     Process_HandlePage::Process_HandlePage() {
         InitializeComponent();
 
+        HandleTitleText().Text(GetLocalizedString(L"ProcHandle_Title.Text"));
+        HandleCountText().Text(GetLocalizedString(L"ProcHandle_Loading.Text"));
+        TypeHeaderButton().Content(tbox(L"ProcHandle_HeaderType.Content"));
+        ObjectHeaderButton().Content(tbox(L"ProcHandle_HeaderObject.Content"));
+        HandleHeaderButton().Content(tbox(L"ProcHandle_HeaderHandle.Content"));
+        AccessHeaderButton().Content(tbox(L"ProcHandle_HeaderAccess.Content"));
+        AttributesHeaderButton().Content(tbox(L"ProcHandle_HeaderAttributes.Content"));
+
         HandleListView().ItemsSource(m_handleList);
 
         this->Loaded([this](auto&&, auto&&) {
@@ -133,14 +141,14 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         // 更新句柄数量文本
-        std::wstringstream countText;
-        countText << GetLocalizedString(L"ProcHandle_CountPrefix").c_str() << L" " << m_handleList.Size() << L" " << GetLocalizedString(L"ProcHandle_CountSuffix").c_str() << L" (" << duration.count() << " ms)";
-        HandleCountText().Text(countText.str());
+    HandleCountText().Text(t(L"ProcHandle_Count", static_cast<size_t>(m_handleList.Size()), static_cast<long long>(duration.count())));
         LoadingRing().IsActive(false);
 
         LOG_INFO(__WFUNCTION__, L"Loaded handle list, %d entry(s) in total.", m_handleList.Size());
     }
 }
+
+
 
 
 

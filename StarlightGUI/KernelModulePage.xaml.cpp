@@ -241,9 +241,7 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // 更新内核模块数量文本
-        std::wstringstream countText;
-        countText << m_kernelModuleList.Size() << L" (" << duration << " ms)";
-        KernelModuleCountText().Text(countText.str());
+        KernelModuleCountText().Text(t(L"KModule_Count", static_cast<size_t>(m_kernelModuleList.Size()), static_cast<long long>(duration)));
 
         LoadingRing().IsActive(false);
         slg::UpdateVisibleListViewMarqueeByNames(
@@ -322,17 +320,17 @@ namespace winrt::StarlightGUI::implementation
         if (activeColumn == SortColumn::Unknown) return;
 
         if (updateHeader) {
-            NameHeaderButton().Content(tbox(L"KModule_ColModule_Text"));
-            ImageBaseHeaderButton().Content(tbox(L"KModule_ColBase_Text"));
-            DriverObjectHeaderButton().Content(tbox(L"KModule_ColDriverObj_Text"));
-            SizeHeaderButton().Content(tbox(L"KModule_ColSize_Text"));
-            LoadOrderHeaderButton().Content(tbox(L"KModule_ColLoadOrder_Text"));
+            NameHeaderButton().Content(tbox(L"KernelModule_ColModule.Content"));
+            ImageBaseHeaderButton().Content(tbox(L"KernelModule_ColBase.Content"));
+            DriverObjectHeaderButton().Content(tbox(L"KernelModule_ColDriverObj.Content"));
+            SizeHeaderButton().Content(tbox(L"KernelModule_ColSize.Content"));
+            LoadOrderHeaderButton().Content(tbox(L"KernelModule_ColLoadOrder.Content"));
 
-            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(isAscending ? tbox(L"KModule_ColModule_Down") : tbox(L"KModule_ColModule_Up"));
-            if (activeColumn == SortColumn::ImageBase) ImageBaseHeaderButton().Content(isAscending ? tbox(L"KModule_ColBase_Down") : tbox(L"KModule_ColBase_Up"));
-            if (activeColumn == SortColumn::DriverObject) DriverObjectHeaderButton().Content(isAscending ? tbox(L"KModule_ColDriverObj_Down") : tbox(L"KModule_ColDriverObj_Up"));
-            if (activeColumn == SortColumn::Size) SizeHeaderButton().Content(isAscending ? tbox(L"KModule_ColSize_Down") : tbox(L"KModule_ColSize_Up"));
-            if (activeColumn == SortColumn::LoadOrder) LoadOrderHeaderButton().Content(isAscending ? tbox(L"KModule_ColLoadOrder_Down") : tbox(L"KModule_ColLoadOrder_Up"));
+            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(box_value(GetLocalizedString(L"KernelModule_ColModule.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::ImageBase) ImageBaseHeaderButton().Content(box_value(GetLocalizedString(L"KernelModule_ColBase.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::DriverObject) DriverObjectHeaderButton().Content(box_value(GetLocalizedString(L"KernelModule_ColDriverObj.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::Size) SizeHeaderButton().Content(box_value(GetLocalizedString(L"KernelModule_ColSize.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::LoadOrder) LoadOrderHeaderButton().Content(box_value(GetLocalizedString(L"KernelModule_ColLoadOrder.Content") + (isAscending ? L" ↓" : L" ↑")));
         }
 
         std::vector<winrt::StarlightGUI::KernelModuleInfo> sortedKernelModules;
@@ -466,6 +464,7 @@ namespace winrt::StarlightGUI::implementation
         co_return;
     }
 }
+
 
 
 

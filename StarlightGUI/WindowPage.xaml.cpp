@@ -623,9 +623,7 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
         // 更新窗口数量文本
-        std::wstringstream countText;
-        countText << m_windowList.Size() << L" (" << duration << " ms)";
-        WindowCountText().Text(countText.str());
+        WindowCountText().Text(t(L"Window_Count", static_cast<size_t>(m_windowList.Size()), static_cast<long long>(duration)));
 
         LoadingRing().IsActive(false);
         slg::UpdateVisibleListViewMarqueeByNames(
@@ -817,14 +815,14 @@ namespace winrt::StarlightGUI::implementation
         if (activeColumn == SortColumn::Unknown) return;
 
         if (updateHeader) {
-            NameHeaderButton().Content(tbox(L"Win_ColWindow_Text"));
+            NameHeaderButton().Content(tbox(L"Window_ColWindow.Content"));
             BandHeaderButton().Content(box_value(L"ZBID"));
-            WindowStyleHeaderButton().Content(tbox(L"Win_ColStyle_Text"));
+            WindowStyleHeaderButton().Content(tbox(L"Window_ColStyle.Content"));
             HwndHeaderButton().Content(box_value(L"HWND"));
 
-            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(isAscending ? tbox(L"Win_ColWindow_Down") : tbox(L"Win_ColWindow_Up"));
+            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(box_value(GetLocalizedString(L"Window_ColWindow.Content") + (isAscending ? L" ↓" : L" ↑")));
             if (activeColumn == SortColumn::Band) BandHeaderButton().Content(box_value(isAscending ? L"ZBID ↓" : L"ZBID ↑"));
-            if (activeColumn == SortColumn::WindowStyle) WindowStyleHeaderButton().Content(isAscending ? tbox(L"Win_ColStyle_Down") : tbox(L"Win_ColStyle_Up"));
+            if (activeColumn == SortColumn::WindowStyle) WindowStyleHeaderButton().Content(box_value(GetLocalizedString(L"Window_ColStyle.Content") + (isAscending ? L" ↓" : L" ↑")));
             if (activeColumn == SortColumn::Hwnd) HwndHeaderButton().Content(box_value(isAscending ? L"HWND ↓" : L"HWND ↑"));
         }
 
@@ -903,6 +901,7 @@ namespace winrt::StarlightGUI::implementation
         co_return;
     }
 }
+
 
 
 

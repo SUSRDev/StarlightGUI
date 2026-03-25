@@ -38,6 +38,11 @@ namespace winrt::StarlightGUI::implementation
     Process_KCTPage::Process_KCTPage() {
         InitializeComponent();
 
+        KCTTitleText().Text(GetLocalizedString(L"ProcKCT_Title.Text"));
+        KCTCountText().Text(GetLocalizedString(L"ProcKCT_Loading.Text"));
+        FunctionHeaderButton().Content(tbox(L"ProcKCT_HeaderFunction.Content"));
+        AddressHeaderButton().Content(tbox(L"ProcKCT_HeaderAddress.Content"));
+
         KCTListView().ItemsSource(m_kctList);
 
         this->Loaded([this](auto&&, auto&&) {
@@ -144,14 +149,14 @@ namespace winrt::StarlightGUI::implementation
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         // 更新模块数量文本
-        std::wstringstream countText;
-        countText << GetLocalizedString(L"ProcKCT_CountPrefix").c_str() << L" " << m_kctList.Size() << L" " << GetLocalizedString(L"ProcKCT_CountSuffix").c_str() << L" (" << duration.count() << " ms)";
-        KCTCountText().Text(countText.str());
+    KCTCountText().Text(t(L"ProcKCT_Count", static_cast<size_t>(m_kctList.Size()), static_cast<long long>(duration.count())));
         LoadingRing().IsActive(false);
 
         LOG_INFO(__WFUNCTION__, L"Loaded kernel callback table list, %d entry(s) in total.", m_kctList.Size());
     }
 }
+
+
 
 
 
