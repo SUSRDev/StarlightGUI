@@ -44,6 +44,15 @@ namespace winrt::StarlightGUI::implementation
         SetupLocalization();
 
         KernelModuleListView().ItemsSource(m_kernelModuleList);
+        HeaderColumnsGrid().LayoutUpdated([weak = get_weak()](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(
+                    self->HeaderColumnsGrid(),
+                    self->BodyColumnsGrid(),
+                    self->KernelModuleListView(),
+                    0);
+            }
+            });
         KernelModuleListView().SizeChanged([weak = get_weak()](auto&&, auto&&) {
             if (auto self = weak.get()) {
                 slg::UpdateVisibleListViewMarqueeByNames(
@@ -56,6 +65,7 @@ namespace winrt::StarlightGUI::implementation
             });
 
         this->Loaded([this](auto&&, auto&&) {
+            slg::SyncListViewColumnWidths(HeaderColumnsGrid(), BodyColumnsGrid(), KernelModuleListView(), 0);
             LoadKernelModuleList();
             });
         this->Unloaded([this](auto&&, auto&&) {
@@ -158,6 +168,8 @@ namespace winrt::StarlightGUI::implementation
 
         auto itemContainer = args.ItemContainer().try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
         if (!itemContainer) return;
+
+        slg::ApplyHeaderColumnWidthsToContainer(HeaderColumnsGrid(), itemContainer, 0);
 
         auto contentRoot = itemContainer.ContentTemplateRoot().try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>();
         if (!contentRoot) return;

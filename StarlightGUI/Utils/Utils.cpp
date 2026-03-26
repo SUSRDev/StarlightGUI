@@ -562,4 +562,79 @@ namespace slg {
             UpdateVisibleListViewMarqueeByNamesCore(listView, count, containerName, textBlockName, marqueeName, widthPadding);
             });
     }
+
+    void ApplyHeaderColumnWidthsToRow(
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid,
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& rowGrid,
+        uint32_t rowOffset)
+    {
+        if (!headerGrid || !rowGrid) return;
+
+        auto headerColumns = headerGrid.ColumnDefinitions();
+        auto rowColumns = rowGrid.ColumnDefinitions();
+        if (headerColumns.Size() == 0 || rowColumns.Size() < rowOffset + headerColumns.Size()) return;
+
+        for (uint32_t i = 0; i < headerColumns.Size(); ++i) {
+            rowColumns.GetAt(rowOffset + i).Width(headerColumns.GetAt(i).Width());
+        }
+    }
+
+    void ApplyHeaderColumnWidthsToContainer(
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid,
+        winrt::Microsoft::UI::Xaml::Controls::ListViewItem const& itemContainer,
+        uint32_t rowOffset)
+    {
+        if (!headerGrid || !itemContainer) return;
+
+        auto rowGrid = itemContainer.ContentTemplateRoot().try_as<winrt::Microsoft::UI::Xaml::Controls::Grid>();
+        if (!rowGrid) return;
+
+        ApplyHeaderColumnWidthsToRow(headerGrid, rowGrid, rowOffset);
+    }
+
+    void SyncListViewColumnWidths(
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid,
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& bodyGrid,
+        winrt::Microsoft::UI::Xaml::Controls::ListView const& listView,
+        uint32_t rowOffset,
+        double epsilon)
+    {
+        if (!headerGrid || !bodyGrid || !listView) return;
+
+        auto headerColumns = headerGrid.ColumnDefinitions();
+        auto bodyColumns = bodyGrid.ColumnDefinitions();
+        if (headerColumns.Size() == 0 || bodyColumns.Size() < headerColumns.Size()) return;
+
+        static std::unordered_map<uint64_t, std::vector<double>> cachedHeaderWidths;
+        uint64_t key = reinterpret_cast<uint64_t>(winrt::get_abi(headerGrid));
+        auto& lastWidths = cachedHeaderWidths[key];
+        if (lastWidths.size() != headerColumns.Size()) {
+            lastWidths.assign(headerColumns.Size(), -1.0);
+        }
+
+        bool changed = false;
+        for (uint32_t i = 0; i < headerColumns.Size(); ++i) {
+            double current = headerColumns.GetAt(i).ActualWidth();
+            double previous = lastWidths[i];
+            if (current > previous + epsilon || current + epsilon < previous) {
+                changed = true;
+                break;
+            }
+        }
+
+        if (!changed) return;
+
+        for (uint32_t i = 0; i < headerColumns.Size(); ++i) {
+            auto headerColumn = headerColumns.GetAt(i);
+            bodyColumns.GetAt(i).Width(headerColumn.Width());
+            lastWidths[i] = headerColumn.ActualWidth();
+        }
+
+        auto itemCount = listView.Items().Size();
+        for (uint32_t i = 0; i < itemCount; ++i) {
+            auto itemContainer = listView.ContainerFromIndex(i).try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
+            if (!itemContainer) continue;
+            ApplyHeaderColumnWidthsToContainer(headerGrid, itemContainer, rowOffset);
+        }
+    }
 }

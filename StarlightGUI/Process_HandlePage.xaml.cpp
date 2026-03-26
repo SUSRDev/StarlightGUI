@@ -40,8 +40,14 @@ namespace winrt::StarlightGUI::implementation
         SetupLocalization();
 
         HandleListView().ItemsSource(m_handleList);
+        HeaderColumnsGrid().LayoutUpdated([weak = get_weak()](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(self->HeaderColumnsGrid(), self->BodyColumnsGrid(), self->HandleListView(), 0);
+            }
+            });
 
         this->Loaded([this](auto&&, auto&&) {
+            slg::SyncListViewColumnWidths(HeaderColumnsGrid(), BodyColumnsGrid(), HandleListView(), 0);
             LoadHandleList();
             });
 
@@ -91,7 +97,10 @@ namespace winrt::StarlightGUI::implementation
         winrt::Microsoft::UI::Xaml::Controls::ListViewBase const& sender,
         winrt::Microsoft::UI::Xaml::Controls::ContainerContentChangingEventArgs const& args)
     {
-
+        if (args.InRecycleQueue()) return;
+        auto itemContainer = args.ItemContainer().try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
+        if (!itemContainer) return;
+        slg::ApplyHeaderColumnWidthsToContainer(HeaderColumnsGrid(), itemContainer, 0);
     }
 
     winrt::Windows::Foundation::IAsyncAction Process_HandlePage::LoadHandleList()

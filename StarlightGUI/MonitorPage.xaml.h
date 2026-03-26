@@ -2,6 +2,7 @@
 
 #include "MonitorPage.g.h"
 #include <sddl.h>
+#include <vector>
 #define PAGE_SIZE 0x1000
 
 #define DBWIN_BUFFER_READY L"DBWIN_BUFFER_READY"
@@ -221,6 +222,19 @@ namespace winrt::StarlightGUI::implementation
         uint32_t m_lastDbgViewLength = 0;
         uint64_t m_reloadRequestVersion = 0;
 		winrt::Microsoft::UI::Xaml::DispatcherTimer windbgTimer;
+
+        struct ColumnSyncBinding
+        {
+            winrt::Microsoft::UI::Xaml::Controls::Grid HeaderGrid{ nullptr };
+            winrt::Microsoft::UI::Xaml::Controls::Grid BodyGrid{ nullptr };
+            winrt::Microsoft::UI::Xaml::Controls::ListView ListView{ nullptr };
+            uint32_t RowOffset = 0;
+        };
+
+        void InitializeColumnSyncBindings();
+        void AttachColumnSyncToSection(winrt::Microsoft::UI::Xaml::Controls::Grid const& sectionRoot, uint32_t rowOffset = 0);
+        static void EnsureHeaderSplitters(winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid);
+        std::vector<ColumnSyncBinding> m_columnSyncBindings;
 
         inline static bool currentSortingOption;
         inline static hstring currentSortingType;

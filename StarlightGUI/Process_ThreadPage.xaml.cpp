@@ -43,8 +43,14 @@ namespace winrt::StarlightGUI::implementation
         SetupLocalization();
 
         ThreadListView().ItemsSource(m_threadList);
+        HeaderColumnsGrid().LayoutUpdated([weak = get_weak()](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(self->HeaderColumnsGrid(), self->BodyColumnsGrid(), self->ThreadListView(), 0);
+            }
+            });
 
         this->Loaded([this](auto&&, auto&&) {
+            slg::SyncListViewColumnWidths(HeaderColumnsGrid(), BodyColumnsGrid(), ThreadListView(), 0);
             LoadThreadList();
             });
 
@@ -179,7 +185,10 @@ namespace winrt::StarlightGUI::implementation
         winrt::Microsoft::UI::Xaml::Controls::ListViewBase const& sender,
         winrt::Microsoft::UI::Xaml::Controls::ContainerContentChangingEventArgs const& args)
     {
-
+        if (args.InRecycleQueue()) return;
+        auto itemContainer = args.ItemContainer().try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
+        if (!itemContainer) return;
+        slg::ApplyHeaderColumnWidthsToContainer(HeaderColumnsGrid(), itemContainer, 0);
     }
 
     winrt::Windows::Foundation::IAsyncAction Process_ThreadPage::LoadThreadList()

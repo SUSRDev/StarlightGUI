@@ -6,6 +6,7 @@
 #include <coroutine>
 #include <exception>
 #include <unordered_map>
+#include <vector>
 #include <winrt/Microsoft.UI.Xaml.Input.h>
 
 using namespace winrt;
@@ -119,6 +120,23 @@ namespace slg {
         winrt::hstring const& textBlockName,
         winrt::hstring const& marqueeName,
         double widthPadding = 2.0);
+
+    void ApplyHeaderColumnWidthsToRow(
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid,
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& rowGrid,
+        uint32_t rowOffset = 0);
+
+    void ApplyHeaderColumnWidthsToContainer(
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid,
+        winrt::Microsoft::UI::Xaml::Controls::ListViewItem const& itemContainer,
+        uint32_t rowOffset = 0);
+
+    void SyncListViewColumnWidths(
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid,
+        winrt::Microsoft::UI::Xaml::Controls::Grid const& bodyGrid,
+        winrt::Microsoft::UI::Xaml::Controls::ListView const& listView,
+        uint32_t rowOffset = 0,
+        double epsilon = 0.5);
 
     template <typename T>
     T FindParent(winrt::Microsoft::UI::Xaml::DependencyObject const& child)

@@ -57,6 +57,11 @@ namespace winrt::StarlightGUI::implementation
         WindowListView().ItemsSource(m_windowList);
         WindowListView().ItemContainerTransitions().Clear();
         WindowListView().ItemContainerTransitions().Append(EntranceThemeTransition());
+        HeaderColumnsGrid().LayoutUpdated([weak = get_weak()](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(self->HeaderColumnsGrid(), self->BodyColumnsGrid(), self->WindowListView(), 1);
+            }
+            });
         WindowListView().SizeChanged([weak = get_weak()](auto&&, auto&&) {
             if (auto self = weak.get()) {
                 slg::UpdateVisibleListViewMarqueeByNames(
@@ -75,6 +80,7 @@ namespace winrt::StarlightGUI::implementation
             });
 
         this->Loaded([this](auto&&, auto&&) -> IAsyncAction {
+            slg::SyncListViewColumnWidths(HeaderColumnsGrid(), BodyColumnsGrid(), WindowListView(), 1);
             // 初始化一次，后面不释放，程序退出时自动释放
             HMODULE hModule = LoadLibraryW(wtmPath.c_str());
 
@@ -529,6 +535,8 @@ namespace winrt::StarlightGUI::implementation
 
         auto itemContainer = args.ItemContainer().try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
         if (!itemContainer) return;
+
+        slg::ApplyHeaderColumnWidthsToContainer(HeaderColumnsGrid(), itemContainer, 1);
 
         auto contentRoot = itemContainer.ContentTemplateRoot().try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>();
         if (!contentRoot) return;

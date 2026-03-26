@@ -63,9 +63,19 @@ namespace winrt::StarlightGUI::implementation
         g_filePageInstance = this;
 
         FileListView().ItemsSource(m_fileList);
+        HeaderColumnsGrid().LayoutUpdated([weak = get_weak()](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(
+                    self->HeaderColumnsGrid(),
+                    self->BodyColumnsGrid(),
+                    self->FileListView(),
+                    1);
+            }
+            });
 
         this->Loaded([this](auto&&, auto&&) {
             g_filePageInstance = this;
+            slg::SyncListViewColumnWidths(HeaderColumnsGrid(), BodyColumnsGrid(), FileListView(), 1);
             if (FileTabView().TabItems().Size() == 0) {
                 CreateNewTab(kFileHomePage, true);
             }
@@ -739,8 +749,14 @@ namespace winrt::StarlightGUI::implementation
         winrt::Microsoft::UI::Xaml::Controls::ListViewBase const& sender,
         winrt::Microsoft::UI::Xaml::Controls::ContainerContentChangingEventArgs const& args)
     {
+        if (args.InRecycleQueue()) return;
 
         if (auto file = args.Item().try_as<winrt::StarlightGUI::FileInfo>()) {
+            auto itemContainer = args.ItemContainer().try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
+            if (itemContainer) {
+                slg::ApplyHeaderColumnWidthsToContainer(HeaderColumnsGrid(), itemContainer, 1);
+            }
+
             if (file.Icon()) {
                 UpdateRealizedItemIcon(file, file.Icon());
             }

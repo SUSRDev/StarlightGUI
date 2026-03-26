@@ -52,6 +52,11 @@ namespace winrt::StarlightGUI::implementation
         SetupLocalization();
 
         ProcessListView().ItemsSource(m_processList);
+        HeaderColumnsGrid().LayoutUpdated([weak = get_weak()](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(self->HeaderColumnsGrid(), self->BodyColumnsGrid(), self->ProcessListView(), 1);
+            }
+            });
         ProcessListView().SizeChanged([weak = get_weak()](auto&&, auto&&) {
             if (auto self = weak.get()) {
                 slg::UpdateVisibleListViewMarqueeByNames(
@@ -77,6 +82,7 @@ namespace winrt::StarlightGUI::implementation
 
         this->Loaded([this](auto&&, auto&&) {
             autoRefreshTimer.Start();
+            slg::SyncListViewColumnWidths(HeaderColumnsGrid(), BodyColumnsGrid(), ProcessListView(), 1);
             LoadProcessList();
 			});
 
@@ -388,6 +394,8 @@ namespace winrt::StarlightGUI::implementation
 
             auto itemContainer = args.ItemContainer().try_as<winrt::Microsoft::UI::Xaml::Controls::ListViewItem>();
             if (itemContainer) {
+                slg::ApplyHeaderColumnWidthsToContainer(HeaderColumnsGrid(), itemContainer, 1);
+
                 auto contentRoot = itemContainer.ContentTemplateRoot().try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>();
                 if (contentRoot) {
                     slg::UpdateTextMarqueeByNames(

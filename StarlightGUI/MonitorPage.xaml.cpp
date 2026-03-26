@@ -3,15 +3,142 @@
 #if __has_include("MonitorPage.g.cpp")
 #include "MonitorPage.g.cpp"
 #endif
+#include <winrt/XamlToolkit.WinUI.Controls.h>
 
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
+using namespace Microsoft::UI::Xaml::Controls;
 using namespace Microsoft::UI::Xaml::Controls::Primitives;
+using namespace Microsoft::UI::Xaml::Media;
 using namespace WinUI3Package;
+using namespace XamlToolkit::WinUI::Controls;
 
 namespace winrt::StarlightGUI::implementation
 {
 	static std::vector<winrt::StarlightGUI::ObjectEntry> partitions;
+
+    void MonitorPage::EnsureHeaderSplitters(winrt::Microsoft::UI::Xaml::Controls::Grid const& headerGrid)
+    {
+        if (!headerGrid) return;
+
+        auto columns = headerGrid.ColumnDefinitions();
+        if (columns.Size() < 2) return;
+
+        for (uint32_t column = 0; column + 1 < columns.Size(); ++column) {
+            bool exists = false;
+            for (auto const& child : headerGrid.Children()) {
+                auto splitter = child.try_as<GridSplitter>();
+                if (!splitter) continue;
+                if (Grid::GetColumn(splitter) != static_cast<int>(column)) continue;
+                exists = true;
+                break;
+            }
+
+            if (exists) continue;
+
+            GridSplitter splitter;
+            splitter.Width(9);
+            splitter.Margin(ThicknessHelper::FromLengths(0, 0, -5, 0));
+            splitter.Opacity(0);
+            splitter.HorizontalAlignment(HorizontalAlignment::Right);
+            splitter.VerticalAlignment(VerticalAlignment::Stretch);
+            splitter.Background(SolidColorBrush(Windows::UI::Colors::Transparent()));
+            splitter.ResizeBehavior(GridResizeBehavior::BasedOnAlignment);
+            splitter.ResizeDirection(GridResizeDirection::Columns);
+            Grid::SetColumn(splitter, column);
+
+            headerGrid.Children().Append(splitter);
+        }
+    }
+
+    void MonitorPage::AttachColumnSyncToSection(winrt::Microsoft::UI::Xaml::Controls::Grid const& sectionRoot, uint32_t rowOffset)
+    {
+        if (!sectionRoot) return;
+
+        Grid headerGrid{ nullptr };
+        Grid bodyGrid{ nullptr };
+
+        auto tryResolveHeaderBody = [&](Grid const& container) -> bool {
+            if (!container) return false;
+
+            Grid header{ nullptr };
+            Grid body{ nullptr };
+            for (auto const& child : container.Children()) {
+                auto border = child.try_as<Border>();
+                if (!border) continue;
+
+                auto grid = border.Child().try_as<Grid>();
+                if (!grid) continue;
+
+                int row = Grid::GetRow(border);
+                if (row == 0) header = grid;
+                else if (row == 1) body = grid;
+            }
+
+            if (header && body) {
+                headerGrid = header;
+                bodyGrid = body;
+                return true;
+            }
+            return false;
+            };
+
+        if (!tryResolveHeaderBody(sectionRoot)) {
+            for (auto const& child : sectionRoot.Children()) {
+                auto childGrid = child.try_as<Grid>();
+                if (!childGrid) continue;
+                if (tryResolveHeaderBody(childGrid)) break;
+            }
+        }
+
+        if (!headerGrid || !bodyGrid) return;
+
+        auto listView = slg::FindVisualChild<ListView>(bodyGrid);
+        if (!listView) return;
+
+        EnsureHeaderSplitters(headerGrid);
+
+        m_columnSyncBindings.push_back({ headerGrid, bodyGrid, listView, rowOffset });
+
+        auto weak = get_weak();
+        headerGrid.LayoutUpdated([weak, headerGrid, bodyGrid, listView, rowOffset](auto&&, auto&&) {
+            if (auto self = weak.get()) {
+                slg::SyncListViewColumnWidths(headerGrid, bodyGrid, listView, rowOffset);
+            }
+            });
+
+        listView.ContainerContentChanging([weak, headerGrid, rowOffset](auto&&, auto&& args) {
+            if (args.InRecycleQueue()) return;
+            auto itemContainer = args.ItemContainer().try_as<ListViewItem>();
+            if (!itemContainer) return;
+            if (auto self = weak.get()) {
+                slg::ApplyHeaderColumnWidthsToContainer(headerGrid, itemContainer, rowOffset);
+            }
+            });
+    }
+
+    void MonitorPage::InitializeColumnSyncBindings()
+    {
+        m_columnSyncBindings.clear();
+
+        AttachColumnSyncToSection(ObjectGrid(), 0);
+        AttachColumnSyncToSection(CallbackGrid(), 0);
+        AttachColumnSyncToSection(MiniFilterGrid(), 0);
+        AttachColumnSyncToSection(StdFilterGrid(), 0);
+        AttachColumnSyncToSection(SSDTGrid(), 0);
+        AttachColumnSyncToSection(SSSDTGrid(), 0);
+        AttachColumnSyncToSection(IoTimerGrid(), 0);
+        AttachColumnSyncToSection(ExCallbackGrid(), 0);
+        AttachColumnSyncToSection(IDTGrid(), 0);
+        AttachColumnSyncToSection(GDTGrid(), 0);
+        AttachColumnSyncToSection(PiDDBGrid(), 0);
+        AttachColumnSyncToSection(HALDPTGrid(), 0);
+        AttachColumnSyncToSection(HALPDPTGrid(), 0);
+
+        for (auto const& binding : m_columnSyncBindings) {
+            slg::SyncListViewColumnWidths(binding.HeaderGrid, binding.BodyGrid, binding.ListView, binding.RowOffset);
+        }
+    }
 
 	MonitorPage::MonitorPage() {
 		InitializeComponent();
@@ -34,6 +161,7 @@ namespace winrt::StarlightGUI::implementation
 			HALDPTListView().ItemsSource(m_generalList);
 			HALPDPTListView().ItemsSource(m_generalList);
 		}
+        InitializeColumnSyncBindings();
 
 		auto updateObjectMarquee = [weak = get_weak()](auto&&, auto&&) {
 			if (auto self = weak.get()) {
@@ -1070,7 +1198,7 @@ namespace winrt::StarlightGUI::implementation
 			});
 
 		for (const auto& partition : partitions) {
-			SegmentedItem item;
+			WinUI3Package::SegmentedItem item;
 			TextBlock textBlock;
 			textBlock.Text(partition.Path());
 			item.Content(textBlock);
