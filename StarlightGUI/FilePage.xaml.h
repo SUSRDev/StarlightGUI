@@ -8,6 +8,7 @@ namespace winrt::StarlightGUI::implementation
     struct FilePage : FilePageT<FilePage>
     {
         FilePage();
+        void SetupLocalization();
 
         slg::coroutine RefreshButton_Click(IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);
         void BackButton_Click(IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);

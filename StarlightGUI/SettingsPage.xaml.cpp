@@ -353,7 +353,7 @@ namespace winrt::StarlightGUI::implementation
             if (UpdateAutoStartTask(true)) {
                 auto_start = true;
                 SaveConfig("auto_start", true);
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg_AutoStartEnabled").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
             else {
                 autoStartChanging = true;
@@ -362,14 +362,14 @@ namespace winrt::StarlightGUI::implementation
 
                 auto_start = false;
                 SaveConfig("auto_start", false);
-                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_AutoStartEnableFailed").c_str(), InfoBarSeverity::Error, g_mainWindowInstance, 2500);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance, 2500);
             }
         }
         else {
             if (UpdateAutoStartTask(false)) {
                 auto_start = false;
                 SaveConfig("auto_start", false);
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg_AutoStartDisabled").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
             else {
                 autoStartChanging = true;
@@ -378,7 +378,7 @@ namespace winrt::StarlightGUI::implementation
 
                 auto_start = true;
                 SaveConfig("auto_start", true);
-                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_AutoStartDisableFailed").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
         }
     }
@@ -393,7 +393,7 @@ namespace winrt::StarlightGUI::implementation
             replace_taskmgr = enabled;
             SaveConfig("replace_taskmgr", replace_taskmgr);
             auto msg = enabled ? t(L"Msg_ReplaceTaskMgrEnabled") : t(L"Msg_ReplaceTaskMgrDisabled");
-            slg::CreateInfoBarAndDisplay(t(L"Common.Success"), msg.c_str(), InfoBarSeverity::Success, g_mainWindowInstance, 2500);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance, 2500);
         }
         else {
             replaceTaskManagerChanging = true;
@@ -402,7 +402,7 @@ namespace winrt::StarlightGUI::implementation
 
             replace_taskmgr = !enabled;
             SaveConfig("replace_taskmgr", replace_taskmgr);
-            slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_ReplaceTaskMgrFailed").c_str(), InfoBarSeverity::Error, g_mainWindowInstance, 2500);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance, 2500);
         }
     }
 

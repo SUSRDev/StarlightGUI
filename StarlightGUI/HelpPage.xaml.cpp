@@ -108,10 +108,10 @@ namespace winrt::StarlightGUI::implementation
         auto result = co_await Launcher::LaunchUriAsync(target);
 
         if (result) {
-            slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg_BrowserOpened").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
         }
         else {
-            slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_BrowserFailed").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
         }
     }
 

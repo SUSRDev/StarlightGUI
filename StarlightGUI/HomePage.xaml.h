@@ -57,7 +57,7 @@ namespace winrt::StarlightGUI::implementation
         // 性能显示
         std::unordered_map<int, DiskCardControl> disk_card_map;
         inline static hstring cpu_manufacture = L"", gpu_manufacture = L"", netadpt_manufacture = L"";
-        inline static bool initialized, isNvidia, virtualization, isNetSend = false;
+        inline static bool initialized, isNvidia, isNetSend = false;
         inline static double cache_l1, cache_l2, cache_l3;
         inline static bool net_selected = false;
         inline static DWORD active_net_if_index = 0;

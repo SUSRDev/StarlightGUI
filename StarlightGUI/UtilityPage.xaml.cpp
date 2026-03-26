@@ -203,14 +203,14 @@ namespace winrt::StarlightGUI::implementation{
 		co_await wil::resume_foreground(DispatcherQueue());
 
 		if (result) {
-			slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Utility_ActionSuccess").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+			slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
 		}
 		else {
 			if (GetLastError() == 0) {
-				slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Utility_ActionFailedAlready").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+				slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
 			}
 			else {
-				slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Utility_ActionFailed").c_str() + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+				slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
 			}
 		}
 
@@ -250,10 +250,10 @@ namespace winrt::StarlightGUI::implementation{
 		co_await wil::resume_foreground(DispatcherQueue());
 
 		if (result) {
-			slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Utility_ActionSuccess").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+			slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
 		}
 		else {
-			slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Utility_ActionFailed").c_str() + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+			slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
 		}
 
 		co_return;

@@ -58,11 +58,7 @@ namespace winrt::StarlightGUI::implementation
 
     FilePage::FilePage() {
         InitializeComponent();
-
-        SearchBox().PlaceholderText(t(L"File_SearchBox.PlaceholderText"));
-        NameHeaderButton().Content(tbox(L"File_ColFile.Content"));
-        ModifyTimeHeaderButton().Content(tbox(L"File_ColModifyTime.Content"));
-        SizeHeaderButton().Content(tbox(L"File_ColSize.Content"));
+        SetupLocalization();
 
         g_filePageInstance = this;
 
@@ -257,10 +253,10 @@ namespace winrt::StarlightGUI::implementation
         if (path.empty()) return;
 
         if (path == kFileHomePage) {
-            m_breadcrumbItems.Append(tbox(L"File_ThisPC"));
+            m_breadcrumbItems.Append(tbox(L"File.ThisPC"));
         }
         else if (path.size() >= 2 && path[1] == L':') {
-            m_breadcrumbItems.Append(tbox(L"File_ThisPC"));
+            m_breadcrumbItems.Append(tbox(L"File.ThisPC"));
             std::wstring drive = path.substr(0, 2);
             m_breadcrumbItems.Append(box_value(hstring(drive)));
 
@@ -346,7 +342,7 @@ namespace winrt::StarlightGUI::implementation
         for (uint32_t i = 0; i <= index; ++i) {
             std::wstring part = unbox_value<hstring>(m_breadcrumbItems.GetAt(i)).c_str();
             if (i == 0) {
-                if (part == t(L"File_ThisPC")) {
+                if (part == t(L"File.ThisPC")) {
                     newPath = kFileHomePage;
                     continue;
                 }
@@ -431,7 +427,7 @@ namespace winrt::StarlightGUI::implementation
             if ((item.Name() == L"Windows" || item.Name() == L"Boot" || item.Name() == L"System32" || item.Name() == L"SysWOW64" || item.Name() == L"Microsoft") &&
                 (safeAcceptedName != L"Windows" && safeAcceptedName != L"Boot" && safeAcceptedName != L"System32" && safeAcceptedName != L"SysWOW64" && safeAcceptedName != L"Microsoft")) {
                 safeAcceptedName = item.Name();
-                slg::CreateInfoBarAndDisplay(t(L"Common.Warning"), t(L"File_ImportantFileWarning").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Warning"), t(L"File.Msg.ImportantFileWarning").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
                 return;
             }
             selectedFiles.push_back(item);
@@ -447,7 +443,7 @@ namespace winrt::StarlightGUI::implementation
         * 注意，由于这里是磁盘 IO，我们不要使用异步，否则刷新时可能会出问题
         */
         // 选项1.1
-        auto item1_1 = slg::CreateMenuItem(flyoutStyles, L"\ue8e5", t(L"FileMenu_Open").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
+        auto item1_1 = slg::CreateMenuItem(flyoutStyles, L"\ue8e5", t(L"File.Menu.Open").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
             for (const auto& item : selectedFiles) {
                 if (item.Directory()) {
                     if (currentDirectory == hstring(kFileHomePage)) NavigateTo(item.Path().c_str(), true);
@@ -460,99 +456,99 @@ namespace winrt::StarlightGUI::implementation
         MenuFlyoutSeparator separator1;
 
         // 选项2.1
-        auto item2_1 = slg::CreateMenuItem(flyoutStyles, L"\ue74d", t(L"FileMenu_Delete").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
+        auto item2_1 = slg::CreateMenuItem(flyoutStyles, L"\ue74d", t(L"FileMenu.Delete").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
             for (const auto& item : selectedFiles) {
                 if (KernelInstance::DeleteFileAuto(item.Path().c_str())) {
-                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_DeleteSuccess").c_str() + item.Name() + L" (" + item.Path() + L")", InfoBarSeverity::Success, g_mainWindowInstance);
+                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
                     WaitAndReloadAsync(1000);
                 }
-                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_DeleteFailed").c_str() + item.Name() + L" (" + item.Path() + L")" + t(L"Msg_ErrorCode").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
             });
 
         // 选项2.2
-        auto item2_2 = slg::CreateMenuItem(flyoutStyles, L"\ue733", t(L"FileMenu_DeleteKernel").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
+        auto item2_2 = slg::CreateMenuItem(flyoutStyles, L"\ue733", t(L"File.Menu.DeleteKernel").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
             for (const auto& item : selectedFiles) {
                 if (KernelInstance::_DeleteFileAuto(item.Path().c_str())) {
-                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_DeleteSuccess").c_str() + item.Name() + L" (" + item.Path() + L")", InfoBarSeverity::Success, g_mainWindowInstance);
+                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
                     WaitAndReloadAsync(1000);
                 }
-                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_DeleteFailed").c_str() + item.Name() + L" (" + item.Path() + L")" + t(L"Msg_ErrorCode").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
             });
 
         // 选项2.3
-        auto item2_3 = slg::CreateMenuItem(flyoutStyles, L"\uf5ab", t(L"FileMenu_DeleteMurder").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
+        auto item2_3 = slg::CreateMenuItem(flyoutStyles, L"\uf5ab", t(L"File.Menu.DeleteMurder").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
             for (const auto& item : selectedFiles) {
                 if (KernelInstance::MurderFileAuto(item.Path().c_str())) {
-                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_DeleteSuccess").c_str() + item.Name() + L" (" + item.Path() + L")", InfoBarSeverity::Success, g_mainWindowInstance);
+                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
                     WaitAndReloadAsync(1000);
                 }
-                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_DeleteFailed").c_str() + item.Name() + L" (" + item.Path() + L")" + t(L"Msg_ErrorCode").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
             });
 
         // 选项2.4
-        auto item2_4 = slg::CreateMenuItem(flyoutStyles, L"\ue72e", t(L"FileMenu_Lock").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
+        auto item2_4 = slg::CreateMenuItem(flyoutStyles, L"\ue72e", t(L"File.Menu.Lock").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
             for (const auto& item : selectedFiles) {
                 if (KernelInstance::LockFile(item.Path().c_str())) {
-                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_LockSuccess").c_str() + item.Name() + L" (" + item.Path() + L")", InfoBarSeverity::Success, g_mainWindowInstance);
+                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
                     WaitAndReloadAsync(1000);
                 }
-                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_LockFailed").c_str() + item.Name() + L" (" + item.Path() + L")" + t(L"Msg_ErrorCode").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
             });
 
         // 选项2.5
-        auto item2_5 = slg::CreateMenuItem(flyoutStyles, L"\ue8c8", t(L"FileMenu_Copy").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
+        auto item2_5 = slg::CreateMenuItem(flyoutStyles, L"\ue8c8", t(L"File.Menu.Copy").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) {
             CopyFiles();
             });
 
         MenuFlyoutSeparator separator2;
 
         // 选项3.1
-        auto item3_1 = slg::CreateMenuSubItem(flyoutStyles, L"\ue8c8", t(L"FileMenu_CopyInfo").c_str());
+        auto item3_1 = slg::CreateMenuSubItem(flyoutStyles, L"\ue8c8", t(L"File.Menu.CopyInfo").c_str());
         auto item3_1_sub1 = slg::CreateMenuItem(flyoutStyles, L"\ue8ac", t(L"FileMenu_Name").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (TaskUtils::CopyToClipboard(selectedFiles[0].Name().c_str())) {
                 slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.CopyToClipboard.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_CopyFailed").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.CopyToClipboard.Failed"), InfoBarSeverity::Error, g_mainWindowInstance);
             co_return;
             });
         item3_1.Items().Append(item3_1_sub1);
-        auto item3_1_sub2 = slg::CreateMenuItem(flyoutStyles, L"\uec6c", t(L"FileMenu_Path").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
+        auto item3_1_sub2 = slg::CreateMenuItem(flyoutStyles, L"\uec6c", t(L"File.Menu.Path").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (TaskUtils::CopyToClipboard(selectedFiles[0].Path().c_str())) {
                 slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.CopyToClipboard.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_CopyFailed").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.CopyToClipboard.Failed"), InfoBarSeverity::Error, g_mainWindowInstance);
             co_return;
             });
         item3_1.Items().Append(item3_1_sub2);
-        auto item3_1_sub3 = slg::CreateMenuItem(flyoutStyles, L"\uec92", t(L"FileMenu_ModDate").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
+        auto item3_1_sub3 = slg::CreateMenuItem(flyoutStyles, L"\uec92", t(L"File.Header.ModifyTime").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (TaskUtils::CopyToClipboard(selectedFiles[0].ModifyTime().c_str())) {
                 slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.CopyToClipboard.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg_CopyFailed").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.CopyToClipboard.Failed"), InfoBarSeverity::Error, g_mainWindowInstance);
             co_return;
             });
         item3_1.Items().Append(item3_1_sub3);
 
         // 选项3.2
-        auto item3_2 = slg::CreateMenuItem(flyoutStyles, L"\uec50", t(L"FileMenu_OpenInExplorer").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
+        auto item3_2 = slg::CreateMenuItem(flyoutStyles, L"\uec50", t(L"File.Menu.OpenInExplorer").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (TaskUtils::OpenFolderAndSelectFile(selectedFiles[0].Path().c_str())) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_OpenedFolder").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_OpenFolderFailed").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             co_return;
             });
 
 
         // 选项3.3
-        auto item3_3 = slg::CreateMenuItem(flyoutStyles, L"\ue8ec", t(L"FileMenu_Properties").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
+        auto item3_3 = slg::CreateMenuItem(flyoutStyles, L"\ue8ec", t(L"File.Menu.Properties").c_str(), [this, selectedFiles](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (TaskUtils::OpenFileProperties(selectedFiles[0].Path().c_str())) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_OpenedProperties").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_OpenPropertiesFailed").c_str() + to_hstring((int)GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             co_return;
             });
 
@@ -612,7 +608,7 @@ namespace winrt::StarlightGUI::implementation
             e.AcceptedOperation(DataPackageOperation::Copy);
             auto dragUI = e.DragUIOverride();
             dragUI.IsCaptionVisible(true);
-            dragUI.Caption(t(L"FileMenu_CopyToCurrentDir"));
+            dragUI.Caption(t(L"File.Menu.CopyToCurrentDir"));
         }
         else {
             e.AcceptedOperation(DataPackageOperation::None);
@@ -632,7 +628,7 @@ namespace winrt::StarlightGUI::implementation
 
         [this, lifetime, deferral, dataView]() -> winrt::Windows::Foundation::IAsyncAction {
             if (m_isLoadingFiles || m_isPostLoading) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"File_StillLoading").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"File.StillLoading").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
                 deferral.Complete();
                 co_return;
             }
@@ -662,7 +658,7 @@ namespace winrt::StarlightGUI::implementation
                 co_await CopyDroppedPathsAsync(std::move(droppedPaths));
             }
             catch (...) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"File_DragCopyException").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
 
             deferral.Complete();
@@ -674,11 +670,11 @@ namespace winrt::StarlightGUI::implementation
     {
         if (paths.empty()) co_return;
         if (currentDirectory == hstring(kFileHomePage)) {
-            slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"File_EnterDriveFirst").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"File.Msg.EnterDriveFirst").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
             co_return;
         }
         if (m_isLoadingFiles || m_isPostLoading) {
-            slg::CreateInfoBarAndDisplay(t(L"Common.Warning"), t(L"File_StillLoadingExcl").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Warning"), t(L"File.Msg.StillLoading").c_str(), InfoBarSeverity::Warning, g_mainWindowInstance);
             co_return;
         }
 
@@ -727,11 +723,11 @@ namespace winrt::StarlightGUI::implementation
         }
 
         if (successCount > 0) {
-            slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_CopySuccess").c_str() + to_hstring(successCount) + t(L"File_ItemsSuffix").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             co_await LoadFileList();
         }
         if (failedCount > 0) {
-            slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), hstring(L"") + to_hstring(failedCount) + t(L"File_CopyPartialFail").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+            slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
         }
 
         co_return;
@@ -824,7 +820,7 @@ namespace winrt::StarlightGUI::implementation
 
         if (currentDirectory != hstring(kFileHomePage)) {
             auto previousPage = winrt::make<winrt::StarlightGUI::implementation::FileInfo>();
-            previousPage.Name(currentDirectory.size() <= 3 ? t(L"File_BackToPC").c_str() : t(L"File_PreviousFolder").c_str());
+            previousPage.Name(currentDirectory.size() <= 3 ? t(L"File.BackToPC").c_str() : t(L"File.PreviousFolder").c_str());
             previousPage.Flag(999);
             newFileList.push_back(previousPage);
         }
@@ -851,8 +847,6 @@ namespace winrt::StarlightGUI::implementation
         auto end = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-        std::wstringstream countText;
-        countText << m_allFiles.size() << L" " << t(L"File_FileCount") << L" (" << duration << " ms)";
         LoadingRing().IsActive(false);
 
         LOG_INFO(__WFUNCTION__, L"Loaded file list, %d entry(s) in total.", m_allFiles.size());
@@ -894,7 +888,7 @@ namespace winrt::StarlightGUI::implementation
                 file.SizeULong(0);
                 file.Size(L"");
             }
-            if (file.ModifyTime().empty()) file.ModifyTime(t(L"File_Unknown"));
+            if (file.ModifyTime().empty()) file.ModifyTime(t(L"Common.Unknown"));
             };
 
         std::wstring searchPath = directoryPath + L"\\*";
@@ -958,7 +952,7 @@ namespace winrt::StarlightGUI::implementation
             }
             else
             {
-                file.ModifyTime(t(L"File_Unknown"));
+                file.ModifyTime(t(L"Common.Unknown"));
             }
         }
     }
@@ -1130,7 +1124,7 @@ namespace winrt::StarlightGUI::implementation
 
         if (currentDirectory != hstring(kFileHomePage)) {
             auto previousPage = winrt::make<winrt::StarlightGUI::implementation::FileInfo>();
-            previousPage.Name(currentDirectory.size() <= 3 ? t(L"File_BackToPC").c_str() : t(L"File_PreviousFolder").c_str());
+            previousPage.Name(currentDirectory.size() <= 3 ? t(L"File.BackToPC").c_str() : t(L"File.PreviousFolder").c_str());
             previousPage.Flag(999);
             newFileList.Append(previousPage);
         }
@@ -1191,13 +1185,13 @@ namespace winrt::StarlightGUI::implementation
         if (activeColumn == SortColumn::Unknown) return;
 
         if (updateHeader) {
-            NameHeaderButton().Content(tbox(L"File_ColFile.Content"));
-            ModifyTimeHeaderButton().Content(tbox(L"File_ColModifyTime.Content"));
-            SizeHeaderButton().Content(tbox(L"File_ColSize.Content"));
+            NameHeaderButton().Content(tbox(L"Common.File"));
+            ModifyTimeHeaderButton().Content(tbox(L"File.Header.ModifyTime"));
+            SizeHeaderButton().Content(tbox(L"Common.Size"));
 
-            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(box_value(t(L"File_ColFile.Content") + (isAscending ? L" ↓" : L" ↑")));
-            if (activeColumn == SortColumn::ModifyTime) ModifyTimeHeaderButton().Content(box_value(t(L"File_ColModifyTime.Content") + (isAscending ? L" ↓" : L" ↑")));
-            if (activeColumn == SortColumn::Size) SizeHeaderButton().Content(box_value(t(L"File_ColSize.Content") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::Name) NameHeaderButton().Content(box_value(t(L"Common.File") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::ModifyTime) ModifyTimeHeaderButton().Content(box_value(t(L"File.Header.ModifyTime") + (isAscending ? L" ↓" : L" ↑")));
+            if (activeColumn == SortColumn::Size) SizeHeaderButton().Content(box_value(t(L"Common.Size") + (isAscending ? L" ↓" : L" ↑")));
         }
 
         auto sortActiveColumn = [&](const winrt::StarlightGUI::FileInfo& a, const winrt::StarlightGUI::FileInfo& b) -> bool {
@@ -1340,13 +1334,20 @@ namespace winrt::StarlightGUI::implementation
 				else failedCount++;
             }
             if (successCount > 0) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"File_CopySuccess").c_str() + to_hstring(successCount) + t(L"File_FilesSuffix").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
                 co_await LoadFileList();
             }
             if (failedCount > 0) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), hstring(L"") + to_hstring(failedCount) + t(L"File_FileCopyPartialFail").c_str(), InfoBarSeverity::Error, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_mainWindowInstance);
             }
         }
+    }
+
+    void FilePage::SetupLocalization() {
+        SearchBox().PlaceholderText(t(L"File.PlaceholderText"));
+        NameHeaderButton().Content(tbox(L"Common.File"));
+        ModifyTimeHeaderButton().Content(tbox(L"File.Header.ModifyTime"));
+        SizeHeaderButton().Content(tbox(L"Common.Size"));
     }
 }
 

@@ -131,7 +131,7 @@ namespace winrt::StarlightGUI::implementation
 
                     cs_close(&handle);
                 }
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Disasm_QuerySuccess").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
             else
             {
@@ -165,7 +165,7 @@ namespace winrt::StarlightGUI::implementation
 
             if (result)
             {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Disasm_WriteSuccess").c_str(), InfoBarSeverity::Success, g_mainWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_mainWindowInstance);
             }
             else
             {

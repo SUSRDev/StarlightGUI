@@ -81,20 +81,20 @@ namespace winrt::StarlightGUI::implementation
         // 选项1.1
         auto item1_1 = slg::CreateMenuItem(flyoutStyles, L"\ue711", t(L"ProcThread_Terminate").c_str(), [this, item](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (TaskUtils::_TerminateThread(item.Id())) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), (t(L"ProcThread_TerminateSuccess") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")").c_str(), InfoBarSeverity::Success, g_infoWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
                 LoadThreadList();
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"ProcThread_TerminateFailed") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")" + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
 
         // 选项1.2
         auto item1_2 = slg::CreateMenuItem(flyoutStyles, L"\ue8f0", t(L"ProcThread_TerminateKernel").c_str(), [this, item](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (KernelInstance::_ZwTerminateThread(item.Id())) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), (t(L"ProcThread_TerminateSuccess") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")").c_str(), InfoBarSeverity::Success, g_infoWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
                 LoadThreadList();
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"ProcThread_TerminateFailed") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")" + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
 
@@ -102,10 +102,10 @@ namespace winrt::StarlightGUI::implementation
         auto item1_3 = slg::CreateMenuItem(flyoutStyles, L"\ue945", t(L"ProcThread_TerminateMurder").c_str(), [this, item](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (safeAcceptedPID == item.Id() || !dangerous_confirm) {
                 if (KernelInstance::MurderThread(item.Id())) {
-                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), (t(L"ProcThread_TerminateSuccess") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")").c_str(), InfoBarSeverity::Success, g_infoWindowInstance);
+                    slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
                     LoadThreadList();
                 }
-                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"ProcThread_TerminateFailed") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")" + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+                else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_infoWindowInstance);
             }
             else {
                 safeAcceptedPID = item.Id();
@@ -121,19 +121,19 @@ namespace winrt::StarlightGUI::implementation
         auto item2_1 = slg::CreateMenuSubItem(flyoutStyles, L"\ue912", t(L"ProcThread_SetState").c_str());
         auto item2_1_sub1 = slg::CreateMenuItem(flyoutStyles, L"\ue769", t(L"ProcThread_Suspend").c_str(), [this, item](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (KernelInstance::_SuspendThread(item.Id())) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), (t(L"ProcThread_SuspendSuccess") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")").c_str(), InfoBarSeverity::Success, g_infoWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
                 LoadThreadList();
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"ProcThread_SuspendFailed") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")" + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
         item2_1.Items().Append(item2_1_sub1);
         auto item2_1_sub2 = slg::CreateMenuItem(flyoutStyles, L"\ue768", t(L"ProcThread_Resume").c_str(), [this, item](IInspectable const& sender, RoutedEventArgs const& e) -> winrt::Windows::Foundation::IAsyncAction {
             if (KernelInstance::_ResumeThread(item.Id())) {
-                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), (t(L"ProcThread_ResumeSuccess") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")").c_str(), InfoBarSeverity::Success, g_infoWindowInstance);
+                slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
                 LoadThreadList();
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"ProcThread_ResumeFailed") + L": " + item.Address() + L" (" + to_hstring(item.Id()) + L")" + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.Failed", GetLastError()), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
         item2_1.Items().Append(item2_1_sub2);
@@ -147,7 +147,7 @@ namespace winrt::StarlightGUI::implementation
             if (TaskUtils::CopyToClipboard(std::to_wstring(item.Id()))) {
                 slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.CopyToClipboard.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"Msg_CopyFailed") + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.CopyToClipboard.Failed"), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
         item3_1.Items().Append(item3_1_sub1);
@@ -155,7 +155,7 @@ namespace winrt::StarlightGUI::implementation
             if (TaskUtils::CopyToClipboard(item.EThread().c_str())) {
                 slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.CopyToClipboard.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"Msg_CopyFailed") + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.CopyToClipboard.Failed"), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
         item3_1.Items().Append(item3_1_sub2);
@@ -163,7 +163,7 @@ namespace winrt::StarlightGUI::implementation
             if (TaskUtils::CopyToClipboard(item.Address().c_str())) {
                 slg::CreateInfoBarAndDisplay(t(L"Common.Success"), t(L"Msg.CopyToClipboard.Success"), InfoBarSeverity::Success, g_infoWindowInstance);
             }
-            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), (t(L"Msg_CopyFailed") + t(L"Msg_ErrorCode") + to_hstring((int)GetLastError())).c_str(), InfoBarSeverity::Error, g_infoWindowInstance);
+            else slg::CreateInfoBarAndDisplay(t(L"Common.Failed"), t(L"Msg.CopyToClipboard.Failed"), InfoBarSeverity::Error, g_infoWindowInstance);
             co_return;
             });
         item3_1.Items().Append(item3_1_sub3);

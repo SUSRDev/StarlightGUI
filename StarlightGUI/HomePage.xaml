@@ -74,11 +74,12 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center">
                                 <TextBlock
+                                    x:Name="HomeCurrentTimeUid"
                                     Margin="0,0,0,10"
                                     HorizontalAlignment="Center"
                                     FontSize="16"
                                     FontWeight="SemiBold"
-                                    x:Name="HomeCurrentTimeUid" Text="当前时间" />
+                                    Text="当前时间" />
 
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <!--  小时  -->
@@ -198,18 +199,20 @@
                                     FontWeight="Bold"
                                     Text="Starlight GUI" />
                                 <TextBlock
+                                    x:Name="HomeAppIntroUid"
                                     Margin="0,5,0,0"
                                     FontSize="16"
-                                    x:Name="HomeAppIntroUid" Text="一个 WinUI3 界面的全能内核级系统工具" />
+                                    Text="一个 WinUI3 界面的全能内核级系统工具" />
                                 <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
                                     <FontIcon
                                         FontSize="14"
                                         Foreground="Gray"
                                         Glyph="&#xecc5;" />
                                     <TextBlock
+                                        x:Name="HomeVersionLabelUid"
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        x:Name="HomeVersionLabelUid" Text="  版本：" />
+                                        Text="  版本：" />
                                     <TextBlock
                                         FontSize="14"
                                         Foreground="LightGray"
@@ -221,9 +224,10 @@
                                         Foreground="Gray"
                                         Glyph="&#xec92;" />
                                     <TextBlock
+                                        x:Name="HomeReleaseDateLabelUid"
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        x:Name="HomeReleaseDateLabelUid" Text="  更新日期：" />
+                                        Text="  更新日期：" />
                                     <TextBlock
                                         FontSize="14"
                                         Foreground="LightGray"
@@ -235,9 +239,10 @@
                                         Foreground="Gray"
                                         Glyph="&#xe943;" />
                                     <TextBlock
+                                        x:Name="HomeDeveloperLabelUid"
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        x:Name="HomeDeveloperLabelUid" Text="  开发者：" />
+                                        Text="  开发者：" />
                                     <TextBlock
                                         FontSize="14"
                                         Foreground="LightGray"
@@ -249,9 +254,10 @@
                                         Foreground="Gray"
                                         Glyph="&#xe71b;" />
                                     <TextBlock
+                                        x:Name="HomeOpenSourceUid"
                                         FontSize="14"
                                         Foreground="LightGray"
-                                        x:Name="HomeOpenSourceUid" Text="  开源仓库：https://github.com/OpenStarlight/StarlightGUI" />
+                                        Text="  开源仓库：https://github.com/OpenStarlight/StarlightGUI" />
                                 </StackPanel>
                                 <TextBlock
                                     Padding="0,10,0,0"
@@ -264,18 +270,20 @@
                         </Grid>
                     </Button>
                     <TextBlock
+                        x:Name="HomeOverviewUid"
                         Padding="10"
                         HorizontalAlignment="Left"
                         FontSize="14"
                         FontWeight="Bold"
-                        x:Name="HomeOverviewUid" Text="系统概览" />
+                        Text="系统概览" />
                     <Expander
+                        x:Name="HomeChartUid"
                         Margin="0,0,0,10"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         essential:RevealFocusPanel.AttachToPanel="{x:Bind RevealFocusPanel}"
                         BorderBrush="Transparent"
-                        x:Name="HomeChartUid" Header="统计图">
+                        Header="统计图">
                         <local:LineGraphControl
                             x:Name="TotalLineGraph"
                             Title="占用率统计"
@@ -347,10 +355,6 @@
                                             <Run x:Name="CpuCore" Foreground="LightGray" />
                                         </TextBlock>
                                         <TextBlock>
-                                            <Run x:Name="HomeCpuVirtualizationUid" Text="虚拟化: " />
-                                            <Run x:Name="CpuVirtualization" Foreground="LightGray" />
-                                        </TextBlock>
-                                        <TextBlock>
                                             <Run x:Name="HomeCpuCacheL1Uid" Text="L1 缓存: " />
                                             <Run x:Name="CpuCacheL1" Foreground="LightGray" />
                                         </TextBlock>
@@ -399,9 +403,10 @@
                                 ValueStringFormat=" {0}% " />
                             <StackPanel Grid.Column="1" Margin="20,0,0,0">
                                 <TextBlock
+                                    x:Name="HomeMemTitleUid"
                                     FontSize="20"
                                     FontWeight="Bold"
-                                    x:Name="HomeMemTitleUid" Text="内存" />
+                                    Text="内存" />
                                 <TextBlock
                                     x:Name="MemSize"
                                     FontSize="16"
@@ -543,9 +548,10 @@
                                 ValueStringFormat="" />
                             <StackPanel Grid.Column="1" Margin="20,0,0,0">
                                 <TextBlock
+                                    x:Name="HomeNetTitleUid"
                                     FontSize="20"
                                     FontWeight="Bold"
-                                    x:Name="HomeNetTitleUid" Text="网络" />
+                                    Text="网络" />
                                 <TextBlock
                                     x:Name="NetManufacture"
                                     MaxWidth="500"
@@ -573,7 +579,10 @@
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Grid.Column="3" VerticalAlignment="Bottom">
-                                <Button Click="ChangeMode_Click" x:Name="HomeChangeModeUid" Content="图表切换发送/接收" />
+                                <Button
+                                    x:Name="HomeChangeModeUid"
+                                    Click="ChangeMode_Click"
+                                    Content="图表切换发送/接收" />
                             </StackPanel>
                         </Grid>
                     </Button>

@@ -273,17 +273,10 @@ namespace winrt::StarlightGUI::implementation
 
             LOG_INFO(L"MonitorInstance", L"Initialized PDH counters.");
 
-            // 获取虚拟化
-            int cpuInfo[4] = { 0 };
-            __cpuid(cpuInfo, 1);
-            bool intelVT = (cpuInfo[2] & (1 << 5)) != 0; // VMX
-            __cpuid(cpuInfo, 0x80000001);
-            bool amdV = (cpuInfo[2] & (1 << 2)) != 0; // SVM
-            __cpuid(cpuInfo, 0x80000002);
-            virtualization = intelVT || amdV;
-
             // 获取 CPU 型号
+            int cpuInfo[4] = { 0 };
             char cpu_name[49] = { 0 };
+            __cpuid(cpuInfo, 0x80000002);
             memcpy(cpu_name, cpuInfo, sizeof(cpuInfo));
             __cpuid(cpuInfo, 0x80000003);
             memcpy(cpu_name + 16, cpuInfo, sizeof(cpuInfo));
@@ -409,7 +402,6 @@ namespace winrt::StarlightGUI::implementation
             CpuSyscall().Text(ss.str());
             CpuRunTime().Text(timebuffer);
             CpuCore().Text(to_hstring(std::thread::hardware_concurrency()));
-            CpuVirtualization().Text(virtualization ? t(L"Common.Supported") : t(L"Common.Unsupported"));
             CpuCacheL1().Text(to_hstring(cache_l1) + L" KB");
             CpuCacheL2().Text(to_hstring(cache_l2) + L" MB");
             CpuCacheL3().Text(to_hstring(cache_l3) + L" MB");
@@ -921,7 +913,6 @@ namespace winrt::StarlightGUI::implementation
         HomeCpuSyscallUid().Text(t(L"Home.Overview.CpuSyscall"));
         HomeCpuUptimeUid().Text(t(L"Home.Overview.CpuUptime"));
         HomeCpuCoresUid().Text(t(L"Home.Overview.CpuCores"));
-        HomeCpuVirtualizationUid().Text(t(L"Home.Overview.CpuVirtualization"));
         HomeCpuCacheL1Uid().Text(t(L"Home.Overview.CpuCacheL1"));
         HomeCpuCacheL2Uid().Text(t(L"Home.Overview.CpuCacheL2"));
         HomeCpuCacheL3Uid().Text(t(L"Home.Overview.CpuCacheL3"));
