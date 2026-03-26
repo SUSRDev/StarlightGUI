@@ -7,8 +7,8 @@ namespace winrt::StarlightGUI::implementation
     struct SettingsPage : SettingsPageT<SettingsPage>
     {
         SettingsPage();
-        
         void InitializeOptions();
+        void SetupLocalization();
 
         void EnumFileModeComboBox_SelectionChanged(IInspectable const& sender, winrt::Microsoft::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
 

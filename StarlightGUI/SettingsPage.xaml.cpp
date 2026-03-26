@@ -177,62 +177,6 @@ namespace winrt::StarlightGUI::implementation
         ImageOpacitySlider().Value(image_opacity);
 		DisasmCountSlider().Value(disasm_count);
         LanguageComboBox().SelectedIndex((language == "zh-CN") ? 1 : (language == "en-US") ? 2 : 0);
-
-        SettingsFeatureUid().Text(t(L"Settings_Feature.Text"));
-        SettingsMainUid().Text(t(L"Settings_Main.Text"));
-        SettingsAppearanceUid().Text(t(L"Settings_Appearance.Text"));
-        SettingsImportImageUid().Content(tbox(L"Settings_ImportImage.Content"));
-        SettingsClearImageUid().Content(tbox(L"Settings_ClearImage.Content"));
-        SettingsImageRefreshUid().Content(tbox(L"Settings_ImageRefresh.Content"));
-        SettingsOtherUid().Text(t(L"Settings_Other.Text"));
-        SettingsLogUid().Content(tbox(L"Settings_Log.Content"));
-        SettingsFixUid().Content(tbox(L"Settings_Fix.Content"));
-        EnumFileModeCard().Header(tbox("Settings_EnumFileMode_Card.Header"));
-        EnumFileModeCard().Description(tbox("Settings_EnumFileMode_Card.Description"));
-        EnumStrengthenCard().Header(tbox("Settings_EnumStrengthen_Card.Header"));
-        EnumStrengthenCard().Description(tbox("Settings_EnumStrengthen_Card.Description"));
-        TaskAutoRefreshCard().Header(tbox("Settings_TaskAutoRefresh_Card.Header"));
-        TaskAutoRefreshCard().Description(tbox("Settings_TaskAutoRefresh_Card.Description"));
-        PDHFirstCard().Header(tbox("Settings_PDHFirst_Card.Header"));
-        PDHFirstCard().Description(tbox("Settings_PDHFirst_Card.Description"));
-        DisasmCountCard().Header(tbox("Settings_DisasmCount_Card.Header"));
-        DisasmCountCard().Description(tbox("Settings_DisasmCount_Card.Description"));
-        TrayBgRunCard().Header(tbox("Settings_TrayBgRun_Card.Header"));
-        TrayBgRunCard().Description(tbox("Settings_TrayBgRun_Card.Description"));
-        ElevatedRunCard().Header(tbox("Settings_ElevatedRun_Card.Header"));
-        ElevatedRunCard().Description(tbox("Settings_ElevatedRun_Card.Description"));
-        AutoStartCard().Header(tbox("Settings_AutoStart_Card.Header"));
-        AutoStartCard().Description(tbox("Settings_AutoStart_Card.Description"));
-        ReplaceTaskMgrCard().Header(tbox("Settings_ReplaceTaskMgr_Card.Header"));
-        ReplaceTaskMgrCard().Description(tbox("Settings_ReplaceTaskMgr_Card.Description"));
-        BackgroundExpander().Header(tbox("Settings_Background_Card.Header"));
-        BackgroundExpander().Description(tbox("Settings_Background_Card.Description"));
-        AcrylicTypeCard().Header(tbox("Settings_AcrylicType_Card.Header"));
-        AcrylicTypeCard().Description(tbox("Settings_AcrylicType_Card.Description"));
-        MicaTypeCard().Header(tbox("Settings_MicaType_Card.Header"));
-        MicaTypeCard().Description(tbox("Settings_MicaType_Card.Description"));
-        ImageBackgroundExpander().Header(tbox("Settings_ImageBackground_Card.Header"));
-        ImageBackgroundExpander().Description(tbox("Settings_ImageBackground_Card.Description"));
-        ImportImageCard().Header(tbox("Settings_ImportImage_Card.Header"));
-        ImportImageCard().Description(tbox("Settings_ImportImage_Card.Description"));
-        ClearImageCard().Header(tbox("Settings_ClearImage_Card.Header"));
-        ClearImageCard().Description(tbox("Settings_ClearImage_Card.Description"));
-        ImageStretchCard().Header(tbox("Settings_ImageStretch_Card.Header"));
-        ImageStretchCard().Description(tbox("Settings_ImageStretch_Card.Description"));
-        ImageOpacityCard().Header(tbox("Settings_ImageOpacity_Card.Header"));
-        ImageOpacityCard().Description(tbox("Settings_ImageOpacity_Card.Description"));
-        NavigationCard().Header(tbox("Settings_Navigation_Card.Header"));
-        NavigationCard().Description(tbox("Settings_Navigation_Card.Description"));
-        LanguageCard().Header(tbox("Settings_LanguageCard.Header"));
-        LanguageCard().Description(tbox("Settings_LanguageCard.Description"));
-        DangerousConfirmCard().Header(tbox("Settings_DangerousConfirm_Card.Header"));
-        DangerousConfirmCard().Description(tbox("Settings_DangerousConfirm_Card.Description"));
-        CheckUpdateCard().Header(tbox("Settings_CheckUpdate_Card.Header"));
-        CheckUpdateCard().Description(tbox("Settings_CheckUpdate_Card.Description"));
-        LogCard().Header(tbox("Settings_Log_Card.Header"));
-        LogCard().Description(tbox("Settings_Log_Card.Description"));
-        FixCard().Header(tbox("Settings_Fix_Card.Header"));
-        FixCard().Description(tbox("Settings_Fix_Card.Description"));
     }
 
     void SettingsPage::EnumFileModeComboBox_SelectionChanged(IInspectable const& sender, SelectionChangedEventArgs const& e)
@@ -307,7 +251,7 @@ namespace winrt::StarlightGUI::implementation
     void SettingsPage::ElevatedRunButton_Toggled(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
     {
         if (!IsLoaded()) return;
-        slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg_RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
+        slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg.RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
         elevated_run = ElevatedRunButton().IsOn();
         SaveConfig("elevated_run", elevated_run);
     }
@@ -322,7 +266,7 @@ namespace winrt::StarlightGUI::implementation
     void SettingsPage::CheckUpdateButton_Toggled(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
     {
         if (!IsLoaded()) return;
-		slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg_RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
+		slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg.RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
         check_update = CheckUpdateButton().IsOn();
         SaveConfig("check_update", check_update);
     }
@@ -472,7 +416,7 @@ namespace winrt::StarlightGUI::implementation
     void SettingsPage::FixButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
     {
         if (!IsLoaded()) return;
-        slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg_RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
+        slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg.RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
         DriverUtils::FixServices();
     }
 
@@ -496,10 +440,64 @@ namespace winrt::StarlightGUI::implementation
         int idx = (int)LanguageComboBox().SelectedIndex();
         std::string lang = (idx == 0) ? "system" : (idx == 1) ? "zh-CN" : "en-US";
         SaveConfig("language", lang);
-        slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg_RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
+        slg::CreateInfoBarAndDisplay(t(L"Common.Info"), t(L"Msg.RestartRequired").c_str(), InfoBarSeverity::Informational, g_mainWindowInstance);
+    }
+
+    void SettingsPage::SetupLocalization() {
+        SettingsFeatureUid().Text(t(L"Settings.Header.Feature"));
+        SettingsMainUid().Text(t(L"Settings.Header.Main"));
+        SettingsAppearanceUid().Text(t(L"Settings.Header.Appearance"));
+        SettingsImportImageUid().Content(tbox(L"Settings.Button.ImportImage"));
+        SettingsClearImageUid().Content(tbox(L"Settings.Button.ClearImage"));
+        SettingsImageRefreshUid().Content(tbox(L"Settings.Button.ImageRefresh"));
+        SettingsOtherUid().Text(t(L"Settings.Header.Other"));
+        SettingsLogUid().Content(tbox(L"Settings.Button.Log"));
+        SettingsFixUid().Content(tbox(L"Settings.Button.Fix"));
+        EnumFileModeCard().Header(tbox("Settings.Header.Card.EnumFileMode"));
+        EnumFileModeCard().Description(tbox("Settings.Desc.Card.EnumFileMode"));
+        EnumStrengthenCard().Header(tbox("Settings.Header.Card.EnumStrengthen"));
+        EnumStrengthenCard().Description(tbox("Settings.Desc.Card.EnumStrengthen"));
+        TaskAutoRefreshCard().Header(tbox("Settings.Header.Card.TaskAutoRefresh"));
+        TaskAutoRefreshCard().Description(tbox("Settings.Desc.Card.TaskAutoRefresh"));
+        PDHFirstCard().Header(tbox("Settings.Header.Card.PDHFirst"));
+        PDHFirstCard().Description(tbox("Settings.Desc.Card.PDHFirst"));
+        DisasmCountCard().Header(tbox("Settings.Header.Card.DisasmCount"));
+        DisasmCountCard().Description(tbox("Settings.Desc.Card.DisasmCount"));
+        TrayBgRunCard().Header(tbox("Settings.Header.Card.TrayBgRun"));
+        TrayBgRunCard().Description(tbox("Settings.Desc.Card.TrayBgRun"));
+        ElevatedRunCard().Header(tbox("Settings.Header.Card.ElevatedRun"));
+        ElevatedRunCard().Description(tbox("Settings.Desc.Card.ElevatedRun"));
+        AutoStartCard().Header(tbox("Settings.Header.Card.AutoStart"));
+        AutoStartCard().Description(tbox("Settings.Desc.Card.AutoStart"));
+        ReplaceTaskMgrCard().Header(tbox("Settings.Header.Card.ReplaceTaskMgr"));
+        ReplaceTaskMgrCard().Description(tbox("Settings.Desc.Card.ReplaceTaskMgr"));
+        BackgroundExpander().Header(tbox("Settings.Header.Card.Background"));
+        BackgroundExpander().Description(tbox("Settings.Desc.Card.Background"));
+        AcrylicTypeCard().Header(tbox("Settings.Header.Card.AcrylicType"));
+        AcrylicTypeCard().Description(tbox("Settings.Desc.Card.AcrylicType"));
+        MicaTypeCard().Header(tbox("Settings.Header.Card.MicaType"));
+        MicaTypeCard().Description(tbox("Settings.Desc.Card.MicaType"));
+        ImageBackgroundExpander().Header(tbox("Settings.Header.Card.ImageBackground"));
+        ImageBackgroundExpander().Description(tbox("Settings.Desc.Card.ImageBackground"));
+        ImportImageCard().Header(tbox("Settings.Header.Card.ImportImage"));
+        ImportImageCard().Description(tbox("Settings.Desc.Card.ImportImage"));
+        ClearImageCard().Header(tbox("Settings.Header.Card.ClearImage"));
+        ClearImageCard().Description(tbox("Settings.Desc.Card.ClearImage"));
+        ImageStretchCard().Header(tbox("Settings.Header.Card.ImageStretch"));
+        ImageStretchCard().Description(tbox("Settings.Desc.Card.ImageStretch"));
+        ImageOpacityCard().Header(tbox("Settings.Header.Card.ImageOpacity"));
+        ImageOpacityCard().Description(tbox("Settings.Desc.Card.ImageOpacity"));
+        NavigationCard().Header(tbox("Settings.Header.Card.Navigation"));
+        NavigationCard().Description(tbox("Settings.Desc.Card.Navigation"));
+        LanguageCard().Header(tbox("Settings.Header.Card.Language"));
+        LanguageCard().Description(tbox("Settings.Desc.Card.Language"));
+        DangerousConfirmCard().Header(tbox("Settings.Header.Card.DangerousConfirm"));
+        DangerousConfirmCard().Description(tbox("Settings.Desc.Card.DangerousConfirm"));
+        CheckUpdateCard().Header(tbox("Settings.Header.Card.CheckUpdate"));
+        CheckUpdateCard().Description(tbox("Settings.Desc.Card.CheckUpdate"));
+        LogCard().Header(tbox("Settings.Header.Card.Log"));
+        LogCard().Description(tbox("Settings.Desc.Card.Log"));
+        FixCard().Header(tbox("Settings.Header.Card.Fix"));
+        FixCard().Description(tbox("Settings.Desc.Card.Fix"));
     }
 }
-
-
-
-

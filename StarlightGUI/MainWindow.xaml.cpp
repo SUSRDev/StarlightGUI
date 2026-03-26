@@ -278,7 +278,7 @@ namespace winrt::StarlightGUI::implementation
         }
         else if (invokedItem == L"Help") {
             MainFrame().Navigate(xaml_typename<StarlightGUI::HelpPage>());
-            RootNavigation().SelectedItem(RootNavigation().FooterMenuItems().GetAt(1));
+            RootNavigation().SelectedItem(RootNavigation().FooterMenuItems().GetAt(0));
         }
     }
 

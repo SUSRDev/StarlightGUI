@@ -7,6 +7,7 @@ namespace winrt::StarlightGUI::implementation
     struct UtilityPage : UtilityPageT<UtilityPage>
     {
         UtilityPage();
+        void SetupLocalization();
 
         slg::coroutine Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);
         slg::coroutine Button_Click2(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);
